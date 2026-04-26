@@ -965,29 +965,6 @@ function loadDataset() {
   onDataReady();
 }
 
-/**
- * STUDENT 1 TODO — renderTable(data)
- *
- * PURPOSE: Dynamically build and insert table rows into #tableBody.
- *
- * @param {Array} data - Array of student objects from RAW_DATA
- *
- * STEPS:
- *  1. Clear #tableBody
- *  2. If data is empty, show a "No results found" row
- *  3. For each student object, create a <tr> with <td> cells for every column
- *  4. Apply CSS classes: 'numeric' to number cells, 'grade-A/B/C/D' to grade cells
- *  5. Format booleans: job=true → "Yes", job=false → "No"
- *
- * EXAMPLE ROW FORMAT:
- *  <tr>
- *    <td>1</td>
- *    <td>Ana Reyes</td>
- *    <td class="numeric">18</td>
- *    ...
- *    <td class="grade-A">A</td>
- *  </tr>
- */
 function renderTable(data) {
   const tbody = document.getElementById('tableBody');
   tbody.innerHTML = '';
