@@ -947,17 +947,6 @@ function onDataReady() {
    STUDENT 1 — DATASET ENGINE & TABLE (branch: feature/data-engine)
 ═══════════════════════════════════════════════════════════════════ */
 
-/**
- * STUDENT 1 TODO — loadDataset()
- *
- * PURPOSE: Load RAW_DATA into window.DS and trigger the rest of the app.
- *
- * STEPS:
- *  1. Assign RAW_DATA to window.DS (a copy is fine: [...RAW_DATA])
- *  2. Call renderTable(window.DS) to populate the HTML table
- *  3. Call onDataReady() so Students 2 & 3 can initialize their sections
- *  4. Update #rowCount with the total number of rows
- */
 function loadDataset() {
   window.DS = [...RAW_DATA];
   renderTable(window.DS);
