@@ -612,35 +612,6 @@
       <span class="owner-tag tag-s1">Student 1 · Repo Owner</span>
     </div>
 
-    <!--
-    ┌─────────────────────────────────────────────────────────────────┐
-    │  STUDENT 1 CONTRIBUTION — Dataset Engine                        │
-    │  Branch: feature/data-engine                                    │
-    │                                                                 │
-    │  YOUR TASKS:                                                    │
-    │  1. Complete loadDataset() — the sample data is provided        │
-    │     in RAW_DATA below. Parse it and store in window.DS          │
-    │  2. Complete renderTable(data) — build the HTML table           │
-    │     dynamically from the data array                             │
-    │  3. Wire up the filter input and sort dropdown                  │
-    │  4. Call loadDataset() on DOMContentLoaded                      │
-    │                                                                 │
-    │  COMMITS EXPECTED:                                              │
-    │  • "feat: add raw dataset and loadDataset function"             │
-    │  • "feat: implement renderTable with dynamic columns"           │
-    │  • "feat: add filter by name and sort by column"                │
-    │  • "fix: handle edge cases in table rendering"                  │
-    │  • "chore: invite collaborators and set branch protection"      │
-    └─────────────────────────────────────────────────────────────────┘
-    -->
-
-    <div class="todo-callout">
-      <strong>⚠ TODO — Student 1</strong>
-      Implement the three functions marked below: <code>loadDataset()</code>, <code>renderTable(data)</code>,
-      and wire the filter/sort controls. The raw dataset object (RAW_DATA) is already provided.
-      After completion, commit and open your PR to main.
-    </div>
-
     <div class="panel">
       <div class="toolbar">
         <input type="text" id="filterInput" placeholder="Filter by student name..." />
@@ -786,39 +757,6 @@
       <span class="owner-tag tag-s3">Student 3 · Collaborator</span>
     </div>
 
-    <!--
-    ┌─────────────────────────────────────────────────────────────────┐
-    │  STUDENT 3 CONTRIBUTION — Statistical Analysis Engine           │
-    │  Branch: feature/statistics                                     │
-    │                                                                 │
-    │  YOUR TASKS:                                                    │
-    │  1. mean(arr)         → arithmetic average                      │
-    │  2. median(arr)       → middle value of sorted array            │
-    │  3. mode(arr)         → most frequently occurring value         │
-    │  4. variance(arr)     → population variance                     │
-    │  5. stdDev(arr)       → square root of variance                 │
-    │  6. pearsonCorr(x,y)  → Pearson correlation coefficient r       │
-    │  7. linearRegression(x,y) → { slope, intercept, rSquared }     │
-    │  8. Call renderStats(window.DS) inside onDataReady()            │
-    │                                                                 │
-    │  All functions accept plain JS arrays of numbers.              │
-    │                                                                 │
-    │  COMMITS EXPECTED:                                              │
-    │  • "feat: implement mean, median, mode functions"               │
-    │  • "feat: implement variance and standard deviation"            │
-    │  • "feat: implement Pearson correlation coefficient"            │
-    │  • "feat: implement linear regression with R-squared"           │
-    │  • "feat: wire renderStats to display results in the DOM"       │
-    └─────────────────────────────────────────────────────────────────┘
-    -->
-
-    <div class="todo-callout" style="border-left-color: var(--accent3); color: var(--accent3); background: rgba(224,92,106,0.06); border-color: rgba(224,92,106,0.25);">
-      <strong>⚠ TODO — Student 3</strong>
-      Implement all seven statistical functions below the comment block in the JS section.
-      Then call <code>renderStats(window.DS)</code> inside <code>onDataReady()</code>.
-      All placeholder "—" values below should be replaced by computed results.
-    </div>
-
     <!-- Summary stat cards -->
     <div class="stats-grid">
       <div class="stat-card">
@@ -929,8 +867,8 @@ function onDataReady() {
   // Student 2: call your chart initializer here
   // Example: initCharts();
 
-  // Student 3: call your stats renderer here
-  // Example: renderStats(window.DS);
+  // Student 3: renderStats is already implemented below
+  renderStats(window.DS);
 
   console.log("✅ onDataReady() fired. window.DS has", window.DS.length, "rows.");
 }
@@ -1017,7 +955,6 @@ function renderTable(data) {
       <td class="grade-${student.grade}">${student.grade}</td>
     `;
     tbody.appendChild(row);
-
   });
 }
 
@@ -1037,7 +974,7 @@ function renderTable(data) {
  *  'name' → alphabetical, others → numeric descending
  */
 function applyFilterSort() {
-   const filterVal = document.getElementById('filterInput').value.trim().toLowerCase();
+  const filterVal = document.getElementById('filterInput').value.trim().toLowerCase();
   const sortKey   = document.getElementById('sortSelect').value;
 
   let result = window.DS.filter(s =>
@@ -1075,7 +1012,7 @@ function resetTable() {
 
 /* Student 1 entry point — runs when DOM is ready */
 document.addEventListener('DOMContentLoaded', () => {
-  loadDataset(); // TODO: This call is already here — just implement the function above
+  loadDataset();
 });
 
 
@@ -1269,7 +1206,7 @@ function getChartDefaults() {
 ═══════════════════════════════════════════════════════════════════ */
 
 /**
- * STUDENT 3 TODO — mean(arr)
+ * mean(arr)
  *
  * PURPOSE: Compute the arithmetic mean of a numeric array.
  *
@@ -1278,18 +1215,16 @@ function getChartDefaults() {
  *
  * FORMULA: μ = (Σxᵢ) / n
  *
- * EXAMPLE:
- *   mean([10, 20, 30])  →  20.00
- *   mean([91, 68, 97])  →  85.33
+ * Commit: "feat: implement mean, median, mode functions"
  */
 function mean(arr) {
-  // TODO: Implement this function
-  // Hint: use arr.reduce() to sum, then divide by arr.length
-  throw new Error("Student 3: mean() not implemented yet");
+  if (!arr || arr.length === 0) return 0;
+  const sum = arr.reduce((acc, val) => acc + val, 0);
+  return +( sum / arr.length ).toFixed(2);
 }
 
 /**
- * STUDENT 3 TODO — median(arr)
+ * median(arr)
  *
  * PURPOSE: Find the middle value of a sorted array.
  *          For even-length arrays, average the two middle values.
@@ -1297,42 +1232,46 @@ function mean(arr) {
  * @param  {number[]} arr - Array of numbers
  * @returns {number}       Median, rounded to 2 decimal places
  *
- * FORMULA:
- *   odd n:  arr[Math.floor(n/2)]  (after sorting)
- *   even n: (arr[n/2 - 1] + arr[n/2]) / 2
- *
- * EXAMPLE:
- *   median([3, 1, 4, 1, 5])  →  3.00
- *   median([1, 2, 3, 4])     →  2.50
+ * Commit: "feat: implement mean, median, mode functions"
  */
 function median(arr) {
-  // TODO: Implement this function
-  // Hint: [...arr].sort((a,b) => a-b) for a sorted copy (do not mutate original)
-  throw new Error("Student 3: median() not implemented yet");
+  if (!arr || arr.length === 0) return 0;
+  const sorted = [...arr].sort((a, b) => a - b); // sorted copy — original untouched
+  const n   = sorted.length;
+  const mid = Math.floor(n / 2);
+  return n % 2 === 1
+    ? +sorted[mid].toFixed(2)
+    : +( (sorted[mid - 1] + sorted[mid]) / 2 ).toFixed(2);
 }
 
 /**
- * STUDENT 3 TODO — mode(arr)
+ * mode(arr)
  *
  * PURPOSE: Find the most frequently occurring value(s).
  *          If multiple values tie, return all of them joined by " & ".
  *
  * @param  {number[]} arr - Array of numbers
- * @returns {string}       Mode value(s) as a string (e.g., "75" or "75 & 80")
+ * @returns {string}       Mode value(s) as a string
  *
- * STEPS:
- *  1. Build a frequency map: { value: count }
- *  2. Find the maximum count
- *  3. Collect all values that have that count
- *  4. Return them joined by " & "
+ * Commit: "feat: implement mean, median, mode functions"
  */
 function mode(arr) {
-  // TODO: Implement this function
-  throw new Error("Student 3: mode() not implemented yet");
+  if (!arr || arr.length === 0) return '—';
+  // 1. Build frequency map
+  const freq = {};
+  arr.forEach(v => { freq[v] = (freq[v] || 0) + 1; });
+  // 2. Find maximum frequency
+  const maxCount = Math.max(...Object.values(freq));
+  // 3. Collect all values with that frequency and return
+  return Object.keys(freq)
+    .filter(k => freq[k] === maxCount)
+    .map(Number)
+    .sort((a, b) => a - b)
+    .join(' & ');
 }
 
 /**
- * STUDENT 3 TODO — variance(arr)
+ * variance(arr)
  *
  * PURPOSE: Compute the population variance of a numeric array.
  *
@@ -1341,17 +1280,17 @@ function mode(arr) {
  *
  * FORMULA: σ² = (Σ(xᵢ − μ)²) / n
  *
- * EXAMPLE:
- *   variance([2, 4, 4, 4, 5, 5, 7, 9])  →  4.00
+ * Commit: "feat: implement variance and standard deviation"
  */
 function variance(arr) {
-  // TODO: Implement this function
-  // Hint: compute mean first, then average the squared differences
-  throw new Error("Student 3: variance() not implemented yet");
+  if (!arr || arr.length === 0) return 0;
+  const μ = mean(arr);
+  const sumSqDiff = arr.reduce((acc, val) => acc + Math.pow(val - μ, 2), 0);
+  return +( sumSqDiff / arr.length ).toFixed(2);
 }
 
 /**
- * STUDENT 3 TODO — stdDev(arr)
+ * stdDev(arr)
  *
  * PURPOSE: Standard deviation — square root of population variance.
  *
@@ -1359,15 +1298,15 @@ function variance(arr) {
  * @returns {number}       σ, rounded to 2 decimal places
  *
  * FORMULA: σ = √(variance(arr))
+ *
+ * Commit: "feat: implement variance and standard deviation"
  */
 function stdDev(arr) {
-  // TODO: Implement this function
-  // Hint: Math.sqrt(variance(arr))
-  throw new Error("Student 3: stdDev() not implemented yet");
+  return +Math.sqrt(variance(arr)).toFixed(2);
 }
 
 /**
- * STUDENT 3 TODO — pearsonCorr(x, y)
+ * pearsonCorr(x, y)
  *
  * PURPOSE: Pearson correlation coefficient r between two arrays.
  *          r ranges from -1 (perfect negative) to +1 (perfect positive).
@@ -1376,22 +1315,28 @@ function stdDev(arr) {
  * @param  {number[]} y - Dependent variable values (same length as x)
  * @returns {number}      r, rounded to 4 decimal places
  *
- * FORMULA:
- *   r = Σ((xᵢ−x̄)(yᵢ−ȳ)) / √(Σ(xᵢ−x̄)² · Σ(yᵢ−ȳ)²)
+ * FORMULA: r = Σ((xᵢ−x̄)(yᵢ−ȳ)) / √(Σ(xᵢ−x̄)² · Σ(yᵢ−ȳ)²)
  *
- * INTERPRETATION HELPER (use in renderStats):
- *   |r| ≥ 0.7 → Strong
- *   |r| ≥ 0.4 → Moderate
- *   |r| < 0.4 → Weak
- *   Sign: positive = direct relationship, negative = inverse
+ * Commit: "feat: implement Pearson correlation coefficient"
  */
 function pearsonCorr(x, y) {
-  // TODO: Implement this function
-  throw new Error("Student 3: pearsonCorr() not implemented yet");
+  const n  = x.length;
+  const mx = mean(x);
+  const my = mean(y);
+  let numerator = 0, denomX = 0, denomY = 0;
+  for (let i = 0; i < n; i++) {
+    const dx = x[i] - mx;
+    const dy = y[i] - my;
+    numerator += dx * dy;
+    denomX    += dx * dx;
+    denomY    += dy * dy;
+  }
+  const denom = Math.sqrt(denomX * denomY);
+  return denom === 0 ? 0 : +( numerator / denom ).toFixed(4);
 }
 
 /**
- * STUDENT 3 TODO — linearRegression(x, y)
+ * linearRegression(x, y)
  *
  * PURPOSE: Simple linear regression — find the best-fit line y = mx + b.
  *
@@ -1402,44 +1347,77 @@ function pearsonCorr(x, y) {
  * FORMULAS:
  *   m (slope)     = Σ((xᵢ−x̄)(yᵢ−ȳ)) / Σ(xᵢ−x̄)²
  *   b (intercept) = ȳ − m·x̄
- *   R²            = r² (square the Pearson correlation coefficient)
+ *   R²            = r²  (Pearson r squared)
  *
- * ROUND: slope and intercept to 4 decimal places; R² to 4 decimal places.
- *
- * EXAMPLE OUTPUT: { slope: 2.1, intercept: 45.3, rSquared: 0.87 }
+ * Commit: "feat: implement linear regression with R-squared"
  */
 function linearRegression(x, y) {
-  // TODO: Implement this function
-  throw new Error("Student 3: linearRegression() not implemented yet");
+  const mx = mean(x);
+  const my = mean(y);
+  let num = 0, den = 0;
+  for (let i = 0; i < x.length; i++) {
+    const dx = x[i] - mx;
+    num += dx * (y[i] - my);
+    den += dx * dx;
+  }
+  const slope     = den !== 0 ? +( num / den ).toFixed(4) : 0;
+  const intercept = +( my - slope * mx ).toFixed(4);
+  const r         = pearsonCorr(x, y);
+  const rSquared  = +( r * r ).toFixed(4);
+  return { slope, intercept, rSquared };
 }
 
 /**
- * STUDENT 3 TODO — renderStats(data)
+ * renderStats(data)
  *
  * PURPOSE: Compute all statistics from data and update the DOM.
  *          Called from onDataReady() after Student 1 loads the dataset.
  *
  * @param {Array} data - window.DS array
  *
- * DOM ELEMENTS TO UPDATE:
- *   #statMean, #statMedian, #statStdDev, #statMode  — summary cards
- *   #dCount, #dMin, #dMax, #dRange, #dVariance, #dStdDev — descriptive stats
- *   #rPearson, #rInterp, #rSlope, #rIntercept, #rSquared, #rEquation — regression
- *
- * STEPS:
- *  1. Extract scores:    data.map(d => d.score)
- *  2. Extract hours:     data.map(d => d.studyHours)
- *  3. Call each stat function and update the matching DOM element
- *  4. For #rEquation, build a string like: "score = 2.10·hours + 45.30"
- *  5. For #rInterp, return the interpretation string (Strong/Moderate/Weak)
- *     combined with the direction (Positive/Negative)
- *
- * EXAMPLE interpretation: "Strong Positive Correlation"
+ * Commit: "feat: wire renderStats to display results in the DOM"
  */
 function renderStats(data) {
-  // TODO: Implement this function
-  // Hint: use try/catch so errors in your stat functions don't crash the page
-  console.warn("⚠ Student 3: renderStats() is not yet implemented.");
+  try {
+    const scores = data.map(d => d.score);
+    const hours  = data.map(d => d.studyHours);
+
+    // ── Summary stat cards ──────────────────────────
+    document.getElementById('statMean').textContent   = mean(scores);
+    document.getElementById('statMedian').textContent = median(scores);
+    document.getElementById('statStdDev').textContent = stdDev(scores);
+    document.getElementById('statMode').textContent   = mode(scores);
+
+    // ── Descriptive statistics panel ────────────────
+    const minScore = Math.min(...scores);
+    const maxScore = Math.max(...scores);
+    document.getElementById('dCount').textContent    = data.length;
+    document.getElementById('dMin').textContent      = minScore;
+    document.getElementById('dMax').textContent      = maxScore;
+    document.getElementById('dRange').textContent    = maxScore - minScore;
+    document.getElementById('dVariance').textContent = variance(scores);
+    document.getElementById('dStdDev').textContent   = stdDev(scores);
+
+    // ── Correlation & regression panel ──────────────
+    const r   = pearsonCorr(hours, scores);
+    const reg = linearRegression(hours, scores);
+
+    // Interpret the Pearson r value
+    const absR      = Math.abs(r);
+    const strength  = absR >= 0.7 ? 'Strong' : absR >= 0.4 ? 'Moderate' : 'Weak';
+    const direction = r >= 0 ? 'Positive' : 'Negative';
+
+    document.getElementById('rPearson').textContent   = r;
+    document.getElementById('rInterp').textContent    = `${strength} ${direction} Correlation`;
+    document.getElementById('rSlope').textContent     = reg.slope;
+    document.getElementById('rIntercept').textContent = reg.intercept;
+    document.getElementById('rSquared').textContent   = reg.rSquared;
+    document.getElementById('rEquation').textContent  =
+      `score = ${reg.slope}·hours + ${reg.intercept}`;
+
+  } catch (err) {
+    console.error("renderStats error:", err);
+  }
 }
 
 /* ─────────────────────────────────────────────────────────────────
