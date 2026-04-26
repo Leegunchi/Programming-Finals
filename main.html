@@ -987,21 +987,6 @@ function renderTable(data) {
   });
 }
 
-/**
- * STUDENT 1 TODO — applyFilterSort()
- *
- * PURPOSE: Filter by name and sort by selected column, then re-render.
- *
- * STEPS:
- *  1. Read the value from #filterInput (case-insensitive name filter)
- *  2. Read the selected option from #sortSelect
- *  3. Filter window.DS by name, then sort the result
- *  4. Call renderTable(filtered + sorted data)
- *  5. Update #rowCount
- *
- * SORT KEYS match the property names in RAW_DATA:
- *  'name' → alphabetical, others → numeric descending
- */
 function applyFilterSort() {
    const filterVal = document.getElementById('filterInput').value.trim().toLowerCase();
   const sortKey   = document.getElementById('sortSelect').value;
@@ -1021,17 +1006,6 @@ function applyFilterSort() {
   document.getElementById('rowCount').textContent = result.length + ' rows';
 }
 
-/**
- * STUDENT 1 TODO — resetTable()
- *
- * PURPOSE: Clear filters and restore original table.
- *
- * STEPS:
- *  1. Clear #filterInput value
- *  2. Reset #sortSelect to ""
- *  3. Call renderTable(window.DS) to restore full dataset
- *  4. Update #rowCount
- */
 function resetTable() {
   document.getElementById('filterInput').value = '';
   document.getElementById('sortSelect').value = '';
