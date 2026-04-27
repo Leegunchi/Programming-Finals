@@ -926,9 +926,10 @@ window.CHARTS = {};
 
 /* Called automatically when the dataset is ready (Student 1 triggers this) */
 function onDataReady() {
-  initCharts(); // Student 2 only
+  initCharts();
+  renderStats(window.DS);
 
-  console.log("✅ onDataReady() fired. window.DS has", window.DS.length, "rows.");
+  console.log("onDataReady() fired. window.DS has", window.DS.length, "rows.");
 }
 
 
