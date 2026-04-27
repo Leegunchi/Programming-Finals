@@ -9,8 +9,10 @@
   ╔══════════════════════════════════════════════════════════════════════════╗
   ║          DATA SCIENCE COLLABORATIVE GIT PROJECT — INSTRUCTOR COPY       ║
   ║                                                                          ║
-  ║  PURPOSE:  Practice real Git collaboration on a data science codebase.   ║
-  ║  GROUPS:   Maximum 3 students per group.                                 ║
+  ║  DATASET: Global University Students Performance & Habits (Kaggle 2026)  ║
+  ║  SOURCE:  kaggle.com/datasets/asifxzaman/                               ║
+  ║           university-students-performance-and-study-habits2026          ║
+  ║  GROUPS:  Maximum 3 students per group.                                  ║
   ║                                                                          ║
   ║  ┌─────────────────────────────────────────────────────────────────────┐ ║
   ║  │  STUDENT 1 (REPO OWNER) ── Project setup + Dataset & Table Engine   │ ║
@@ -43,25 +45,21 @@
   <!-- Chart.js — only dependency, loaded from CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 
-  <!-- Google Fonts — Courier Prime for terminal feel, DM Sans for UI -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
   <style>
-    /* ──────────────────────────────────────────────
-       DESIGN TOKENS  (CSS custom properties)
-       Any student can update these for theming.
-    ────────────────────────────────────────────── */
     :root {
-      --bg:         #0d0f14;        /* near-black background */
-      --surface:    #151820;        /* card / panel background */
-      --surface2:   #1c2030;        /* slightly lighter surface */
-      --border:     #2a2f45;        /* subtle border */
-      --accent:     #f0b429;        /* amber — primary accent */
-      --accent2:    #3ecfcf;        /* teal — secondary accent */
-      --accent3:    #e05c6a;        /* coral — danger / highlight */
-      --text:       #d4daf0;        /* primary text */
-      --text-dim:   #6b748f;        /* muted text */
+      --bg:         #0d0f14;
+      --surface:    #151820;
+      --surface2:   #1c2030;
+      --border:     #2a2f45;
+      --accent:     #f0b429;
+      --accent2:    #3ecfcf;
+      --accent3:    #e05c6a;
+      --text:       #d4daf0;
+      --text-dim:   #6b748f;
       --mono:       'Courier Prime', monospace;
       --sans:       'DM Sans', sans-serif;
       --radius:     6px;
@@ -77,17 +75,12 @@
       color: var(--text);
       min-height: 100vh;
       padding: 0 0 80px;
-      /* subtle scanline texture for terminal feel */
       background-image: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 2px,
-        rgba(255,255,255,0.013) 2px,
-        rgba(255,255,255,0.013) 4px
+        0deg, transparent, transparent 2px,
+        rgba(255,255,255,0.013) 2px, rgba(255,255,255,0.013) 4px
       );
     }
 
-    /* ── HEADER ─────────────────────────────────── */
     header {
       background: var(--surface);
       border-bottom: 2px solid var(--accent);
@@ -130,8 +123,7 @@
     }
 
     .git-badge .dot {
-      width: 8px;
-      height: 8px;
+      width: 8px; height: 8px;
       border-radius: 50%;
       background: var(--accent2);
       animation: pulse 2s infinite;
@@ -142,14 +134,8 @@
       50%       { opacity: 0.3; }
     }
 
-    /* ── MAIN LAYOUT ─────────────────────────────── */
-    main {
-      max-width: 1300px;
-      margin: 0 auto;
-      padding: 40px 30px;
-    }
+    main { max-width: 1400px; margin: 0 auto; padding: 40px 30px; }
 
-    /* ── CONTRIBUTION CARDS (instruction panels) ── */
     .contrib-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -167,18 +153,8 @@
       transition: transform 0.2s, box-shadow 0.2s;
     }
 
-    .contrib-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-    }
-
-    .contrib-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-    }
-
+    .contrib-card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(0,0,0,0.4); }
+    .contrib-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
     .contrib-card.s1::before { background: var(--accent); }
     .contrib-card.s2::before { background: var(--accent2); }
     .contrib-card.s3::before { background: var(--accent3); }
@@ -195,23 +171,10 @@
     .s2 .student-tag { color: var(--accent2); }
     .s3 .student-tag { color: var(--accent3); }
 
-    .contrib-card h3 {
-      font-size: 0.95rem;
-      font-weight: 600;
-      margin-bottom: 10px;
-    }
+    .contrib-card h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 10px; }
 
-    .contrib-card ul {
-      list-style: none;
-      font-size: 0.8rem;
-      color: var(--text-dim);
-      line-height: 1.7;
-    }
-
-    .contrib-card ul li::before {
-      content: '→ ';
-      color: var(--text-dim);
-    }
+    .contrib-card ul { list-style: none; font-size: 0.8rem; color: var(--text-dim); line-height: 1.7; }
+    .contrib-card ul li::before { content: '→ '; color: var(--text-dim); }
 
     .branch-tag {
       display: inline-block;
@@ -225,10 +188,7 @@
       color: var(--text-dim);
     }
 
-    /* ── SECTION WRAPPERS ────────────────────────── */
-    .section {
-      margin-bottom: 56px;
-    }
+    .section { margin-bottom: 56px; }
 
     .section-header {
       display: flex;
@@ -256,62 +216,36 @@
       font-weight: 700;
     }
 
-    .tag-s1 { background: rgba(240,180,41,0.15);  color: var(--accent);  border: 1px solid rgba(240,180,41,0.3); }
-    .tag-s2 { background: rgba(62,207,207,0.15);  color: var(--accent2); border: 1px solid rgba(62,207,207,0.3); }
-    .tag-s3 { background: rgba(224,92,106,0.15);  color: var(--accent3); border: 1px solid rgba(224,92,106,0.3); }
+    .tag-s1 { background: rgba(240,180,41,0.15); color: var(--accent);  border: 1px solid rgba(240,180,41,0.3); }
+    .tag-s2 { background: rgba(62,207,207,0.15); color: var(--accent2); border: 1px solid rgba(62,207,207,0.3); }
+    .tag-s3 { background: rgba(224,92,106,0.15); color: var(--accent3); border: 1px solid rgba(224,92,106,0.3); }
 
-    /* ── PANEL / CARD ────────────────────────────── */
-    .panel {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 24px;
-    }
+    .panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px; }
 
-    /* ── TABLE STYLES ────────────────────────────── */
-    .table-wrap {
-      overflow-x: auto;
-      border-radius: var(--radius);
-    }
+    .table-wrap { overflow-x: auto; border-radius: var(--radius); }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.82rem;
-      font-family: var(--mono);
-    }
+    table { width: 100%; border-collapse: collapse; font-size: 0.78rem; font-family: var(--mono); }
 
     thead th {
       background: var(--surface2);
       color: var(--accent);
       text-align: left;
-      padding: 10px 14px;
-      font-size: 0.72rem;
+      padding: 10px 12px;
+      font-size: 0.68rem;
       letter-spacing: 1.5px;
       text-transform: uppercase;
       border-bottom: 2px solid var(--border);
       white-space: nowrap;
     }
 
-    tbody tr {
-      border-bottom: 1px solid var(--border);
-      transition: background 0.15s;
-    }
-
+    tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
     tbody tr:hover { background: var(--surface2); }
-
-    tbody td {
-      padding: 9px 14px;
-      color: var(--text);
-    }
-
+    tbody td { padding: 8px 12px; color: var(--text); white-space: nowrap; }
     tbody td.numeric { color: var(--accent2); }
-    tbody td.grade-A { color: #56d364; }
-    tbody td.grade-B { color: var(--accent); }
-    tbody td.grade-C { color: var(--accent3); }
-    tbody td.grade-D { color: #e05c6a; }
+    tbody td.highlight { color: var(--accent); }
+    tbody td.good { color: #56d364; }
+    tbody td.warn { color: var(--accent3); }
 
-    /* ── TOOLBAR ─────────────────────────────────── */
     .toolbar {
       display: flex;
       gap: 10px;
@@ -332,10 +266,7 @@
       transition: border-color 0.2s;
     }
 
-    input[type="text"]:focus, select:focus {
-      border-color: var(--accent);
-    }
-
+    input[type="text"]:focus, select:focus { border-color: var(--accent); }
     input[type="text"] { width: 220px; }
 
     button {
@@ -351,10 +282,7 @@
       transition: all 0.2s;
     }
 
-    button:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
+    button:hover { border-color: var(--accent); color: var(--accent); }
 
     button.primary {
       background: var(--accent);
@@ -363,23 +291,11 @@
       font-weight: 700;
     }
 
-    button.primary:hover {
-      background: #ffc946;
-    }
+    button.primary:hover { background: #ffc946; }
 
-    .count-badge {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      color: var(--text-dim);
-      margin-left: auto;
-    }
+    .count-badge { font-family: var(--mono); font-size: 0.72rem; color: var(--text-dim); margin-left: auto; }
 
-    /* ── CHART GRID ──────────────────────────────── */
-    .chart-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-    }
+    .chart-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
 
     .chart-box {
       background: var(--surface2);
@@ -415,7 +331,6 @@
 
     .chart-placeholder span { font-size: 2rem; }
 
-    /* ── STATS GRID ──────────────────────────────── */
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -447,24 +362,10 @@
       color: var(--accent3);
     }
 
-    .stat-card .stat-sub {
-      font-size: 0.7rem;
-      color: var(--text-dim);
-      margin-top: 4px;
-    }
+    .stat-card .stat-sub { font-size: 0.7rem; color: var(--text-dim); margin-top: 4px; }
+    .stat-placeholder { font-family: var(--mono); font-size: 1.2rem; color: var(--border); }
 
-    .stat-placeholder {
-      font-family: var(--mono);
-      font-size: 1.2rem;
-      color: var(--border);
-    }
-
-    /* ── ANALYSIS TABLE ──────────────────────────── */
-    .analysis-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
+    .analysis-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 
     .analysis-panel {
       background: var(--surface2);
@@ -482,25 +383,12 @@
       margin-bottom: 14px;
     }
 
-    .stat-list {
-      list-style: none;
-      font-family: var(--mono);
-      font-size: 0.82rem;
-    }
-
-    .stat-list li {
-      display: flex;
-      justify-content: space-between;
-      padding: 7px 0;
-      border-bottom: 1px solid var(--border);
-    }
-
+    .stat-list { list-style: none; font-family: var(--mono); font-size: 0.82rem; }
+    .stat-list li { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid var(--border); }
     .stat-list li:last-child { border-bottom: none; }
-
     .stat-list .key { color: var(--text-dim); }
     .stat-list .val { color: var(--accent2); }
 
-    /* ── TODO CALLOUT ────────────────────────────── */
     .todo-callout {
       background: rgba(240,180,41,0.08);
       border: 1px solid rgba(240,180,41,0.25);
@@ -516,7 +404,6 @@
 
     .todo-callout strong { display: block; margin-bottom: 4px; font-size: 0.72rem; letter-spacing: 1px; }
 
-    /* ── FOOTER ──────────────────────────────────── */
     footer {
       text-align: center;
       margin-top: 60px;
@@ -526,24 +413,35 @@
       letter-spacing: 1px;
     }
 
-    /* ── RESPONSIVE ──────────────────────────────── */
+    .kaggle-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(32,149,242,0.12);
+      border: 1px solid rgba(32,149,242,0.3);
+      border-radius: 4px;
+      padding: 3px 10px;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: #20bef2;
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+
     @media (max-width: 900px) {
-      .contrib-grid    { grid-template-columns: 1fr; }
-      .chart-grid      { grid-template-columns: 1fr; }
-      .stats-grid      { grid-template-columns: repeat(2,1fr); }
-      .analysis-row    { grid-template-columns: 1fr; }
+      .contrib-grid  { grid-template-columns: 1fr; }
+      .chart-grid    { grid-template-columns: 1fr; }
+      .stats-grid    { grid-template-columns: repeat(2,1fr); }
+      .analysis-row  { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════════════════
-     HEADER
-═══════════════════════════════════════════════════════ -->
 <header>
   <div class="header-left">
     <h1>DataSci Collab Dashboard</h1>
-    <p>Student Performance Dataset · Git Collaborative Activity</p>
+    <p>Global University Students Performance &amp; Study Habits 2026 · Kaggle Dataset · Git Collaborative Activity</p>
   </div>
   <div class="git-badge">
     <span class="dot"></span>
@@ -553,12 +451,8 @@
 
 <main>
 
-  <!-- ═══════════════════════════════════════════════════
-       CONTRIBUTION OVERVIEW CARDS
-  ═══════════════════════════════════════════════════ -->
+  <!-- CONTRIBUTION CARDS -->
   <div class="contrib-grid">
-
-    <!-- Student 1 -->
     <div class="contrib-card s1">
       <div class="student-tag">Guinto, Juan Alphonse Valentin, Arguelles</div>
       <h3>Dataset Engine &amp; Project Setup</h3>
@@ -571,8 +465,6 @@
       </ul>
       <span class="branch-tag">branch: main (setup) → feature/data-engine</span>
     </div>
-
-    <!-- Student 2 -->
     <div class="contrib-card s2">
       <div class="student-tag">Theodore Kelly G. Cabrera</div>
       <h3>Data Visualization Layer</h3>
@@ -585,8 +477,6 @@
       </ul>
       <span class="branch-tag">branch: feature/visualization</span>
     </div>
-
-    <!-- Student 3 -->
     <div class="contrib-card s3">
       <div class="student-tag">Tinsay, John Cleo</div>
       <h3>Statistical Analysis Engine</h3>
@@ -599,17 +489,15 @@
       </ul>
       <span class="branch-tag">branch: feature/statistics</span>
     </div>
+  </div>
 
-  </div><!-- /contrib-grid -->
 
-
-  <!-- ═══════════════════════════════════════════════════
-       SECTION 1 — DATASET & TABLE  (STUDENT 1)
-  ═══════════════════════════════════════════════════ -->
+  <!-- ═══ SECTION 1 — DATASET & TABLE (STUDENT 1) ═══ -->
   <section class="section" id="sec-data">
     <div class="section-header">
       <h2>01 · Dataset Explorer</h2>
       <span class="owner-tag tag-s1">Student 1 · Repo Owner</span>
+      <span class="kaggle-badge">📦 Kaggle 2026</span>
     </div>
 
     <!--
@@ -618,17 +506,25 @@
     │  Branch: feature/data-engine                                    │
     │                                                                 │
     │  YOUR TASKS:                                                    │
-    │  1. Complete loadDataset() — the sample data is provided        │
-    │     in RAW_DATA below. Parse it and store in window.DS          │
+    │  1. Complete loadDataset() — RAW_DATA is already provided.     │
+    │     Parse it and store in window.DS                             │
     │  2. Complete renderTable(data) — build the HTML table           │
     │     dynamically from the data array                             │
     │  3. Wire up the filter input and sort dropdown                  │
     │  4. Call loadDataset() on DOMContentLoaded                      │
     │                                                                 │
+    │  DATASET COLUMNS (from Kaggle):                                 │
+    │  studentId, age, gender, country, major, year, gpa,            │
+    │  studyHours, attendance, sleep, screenTime, socialMedia,        │
+    │  gaming, exercise, partTimeJob, relationship, familyIncome,     │
+    │  internet, stress, aiUsage, favAiTool, noteTaking,             │
+    │  examPrepDays, coffee, extracurricular, finalScore,            │
+    │  assignmentScore                                                │
+    │                                                                 │
     │  COMMITS EXPECTED:                                              │
-    │  • "feat: add raw dataset and loadDataset function"             │
+    │  • "feat: add Kaggle dataset and loadDataset function"          │
     │  • "feat: implement renderTable with dynamic columns"           │
-    │  • "feat: add filter by name and sort by column"                │
+    │  • "feat: add filter and sort controls"                         │
     │  • "fix: handle edge cases in table rendering"                  │
     │  • "chore: invite collaborators and set branch protection"      │
     └─────────────────────────────────────────────────────────────────┘
@@ -636,21 +532,50 @@
 
     <div class="todo-callout">
       <strong>⚠ TODO — Student 1</strong>
-      Implement the three functions marked below: <code>loadDataset()</code>, <code>renderTable(data)</code>,
-      and wire the filter/sort controls. The raw dataset object (RAW_DATA) is already provided.
-      After completion, commit and open your PR to main.
+      Implement <code>loadDataset()</code> and <code>renderTable(data)</code>, and wire the filter/sort controls.
+      The RAW_DATA object from the Kaggle dataset is already provided below. After completion, commit and open your PR to main.
     </div>
 
     <div class="panel">
       <div class="toolbar">
-        <input type="text" id="filterInput" placeholder="Filter by student name..." />
+        <input type="text" id="filterInput" placeholder="Filter by student ID, country, major..." />
         <select id="sortSelect">
           <option value="">Sort by...</option>
-          <option value="name">Name</option>
-          <option value="studyHours">Study Hours</option>
-          <option value="score">Final Score</option>
-          <option value="grade">Grade</option>
+          <option value="studentId">Student ID</option>
+          <option value="age">Age</option>
+          <option value="gpa">GPA</option>
+          <option value="studyHours">Study Hours/Day</option>
           <option value="attendance">Attendance %</option>
+          <option value="finalScore">Final Exam Score</option>
+          <option value="assignmentScore">Assignment Score</option>
+          <option value="stress">Stress Level</option>
+          <option value="sleep">Sleep Hours</option>
+        </select>
+        <select id="filterCountry">
+          <option value="">All Countries</option>
+          <option value="Germany">Germany</option>
+          <option value="USA">USA</option>
+          <option value="Canada">Canada</option>
+          <option value="Australia">Australia</option>
+          <option value="France">France</option>
+          <option value="Netherlands">Netherlands</option>
+          <option value="Japan">Japan</option>
+          <option value="Brazil">Brazil</option>
+          <option value="Italy">Italy</option>
+          <option value="South Korea">South Korea</option>
+        </select>
+        <select id="filterMajor">
+          <option value="">All Majors</option>
+          <option value="Law">Law</option>
+          <option value="Economics">Economics</option>
+          <option value="Medicine">Medicine</option>
+          <option value="Physics">Physics</option>
+          <option value="Biology">Biology</option>
+          <option value="Computer Science">Computer Science</option>
+          <option value="Engineering">Engineering</option>
+          <option value="Business">Business</option>
+          <option value="Mathematics">Mathematics</option>
+          <option value="Psychology">Psychology</option>
         </select>
         <button onclick="applyFilterSort()">Apply</button>
         <button onclick="resetTable()">Reset</button>
@@ -662,34 +587,49 @@
           <thead>
             <tr>
               <th>#</th>
-              <th>Student Name</th>
-              <th>Study Hours/Week</th>
+              <th>Student ID</th>
+              <th>Age</th>
+              <th>Gender</th>
+              <th>Country</th>
+              <th>Major</th>
+              <th>Year</th>
+              <th>GPA</th>
+              <th>Study Hrs/Day</th>
               <th>Attendance %</th>
-              <th>Midterm Score</th>
-              <th>Final Score</th>
-              <th>Assignments Done</th>
-              <th>Sleep Hrs/Night</th>
+              <th>Sleep Hrs</th>
+              <th>Screen Time</th>
+              <th>Social Media</th>
+              <th>Gaming</th>
+              <th>Exercise/Wk</th>
               <th>Part-time Job</th>
-              <th>Grade</th>
+              <th>Relationship</th>
+              <th>Family Income</th>
+              <th>Internet</th>
+              <th>Stress</th>
+              <th>AI Usage</th>
+              <th>Fav AI Tool</th>
+              <th>Note Taking</th>
+              <th>Exam Prep Days</th>
+              <th>Coffee/Day</th>
+              <th>Extracurr/Wk</th>
+              <th>Final Score</th>
+              <th>Assignment Score</th>
             </tr>
           </thead>
           <tbody id="tableBody">
-            <!-- Student 1: renderTable() will populate this -->
             <tr>
-              <td colspan="10" style="text-align:center; color:var(--text-dim); font-family:var(--mono); padding:40px;">
+              <td colspan="28" style="text-align:center; color:var(--text-dim); font-family:var(--mono); padding:40px;">
                 ⌛ Waiting for Student 1 to implement loadDataset() and renderTable()
               </td>
             </tr>
           </tbody>
         </table>
       </div>
-    </div><!-- /panel -->
+    </div>
   </section>
 
 
-  <!-- ═══════════════════════════════════════════════════
-       SECTION 2 — VISUALIZATIONS  (STUDENT 2)
-  ═══════════════════════════════════════════════════ -->
+  <!-- ═══ SECTION 2 — VISUALIZATIONS (STUDENT 2) ═══ -->
   <section class="section" id="sec-viz">
     <div class="section-header">
       <h2>02 · Visualizations</h2>
@@ -703,83 +643,74 @@
     │                                                                 │
     │  YOUR TASKS:                                                    │
     │  1. drawBarChart(canvasId, data)  — Study Hours vs Final Score  │
-    │  2. drawScatterPlot(canvasId, data) — Attendance vs Score       │
+    │  2. drawScatterPlot(canvasId, data) — GPA vs Final Score        │
     │  3. drawHistogram(canvasId, data) — Final Score distribution    │
-    │  4. drawPieChart(canvasId, data)  — Grade distribution A/B/C/D │
+    │  4. drawPieChart(canvasId, data)  — Favorite AI Tool usage      │
     │                                                                 │
     │  HOW TO ACCESS DATA:                                            │
     │  - window.DS holds the full dataset array (set by Student 1)   │
-    │  - Each row has: name, studyHours, attendance, midterm,         │
-    │                  score, assignments, sleep, job, grade          │
+    │  - Key fields: studentId, age, gender, country, major, year,   │
+    │    gpa, studyHours, attendance, sleep, screenTime, socialMedia, │
+    │    gaming, exercise, partTimeJob, relationship, familyIncome,   │
+    │    internet, stress, aiUsage, favAiTool, noteTaking,           │
+    │    examPrepDays, coffee, extracurricular, finalScore,          │
+    │    assignmentScore                                              │
     │                                                                 │
     │  CHART.JS IS ALREADY LOADED — use Chart object directly         │
     │                                                                 │
     │  COMMITS EXPECTED:                                              │
     │  • "feat: implement drawBarChart for study hours vs score"      │
-    │  • "feat: implement drawScatterPlot attendance vs score"        │
+    │  • "feat: implement drawScatterPlot GPA vs final score"         │
     │  • "feat: implement drawHistogram for score distribution"       │
-    │  • "feat: implement drawPieChart for grade breakdown"           │
+    │  • "feat: implement drawPieChart for AI tool breakdown"         │
     │  • "fix: add chart destroy to prevent canvas reuse errors"      │
     └─────────────────────────────────────────────────────────────────┘
     -->
 
-    <div class="todo-callout" style="border-left-color: var(--accent2); color: var(--accent2); background: rgba(62,207,207,0.06); border-color: rgba(62,207,207,0.25);">
+    <div class="todo-callout" style="border-left-color:var(--accent2);color:var(--accent2);background:rgba(62,207,207,0.06);border-color:rgba(62,207,207,0.25);">
       <strong>⚠ TODO — Student 2</strong>
       Implement the four chart functions: <code>drawBarChart()</code>, <code>drawScatterPlot()</code>,
       <code>drawHistogram()</code>, and <code>drawPieChart()</code>. Then call <code>initCharts()</code>
       inside <code>onDataReady()</code>. Use Chart.js (already loaded).
-      Replace each placeholder box with a working canvas chart.
     </div>
 
     <div class="chart-grid">
-
-      <!-- Bar Chart -->
       <div class="chart-box">
-        <h4>Study Hours vs Final Score</h4>
+        <h4>Study Hours/Day vs Final Score</h4>
         <div class="chart-placeholder" id="barPlaceholder">
-          <span>📊</span>
-          Student 2: implement drawBarChart()
+          <span>📊</span>Student 2: implement drawBarChart()
         </div>
         <canvas id="barChart" style="display:none;"></canvas>
       </div>
 
-      <!-- Scatter Plot -->
       <div class="chart-box">
-        <h4>Attendance % vs Final Score</h4>
+        <h4>GPA vs Final Exam Score</h4>
         <div class="chart-placeholder" id="scatterPlaceholder">
-          <span>🔵</span>
-          Student 2: implement drawScatterPlot()
+          <span>🔵</span>Student 2: implement drawScatterPlot()
         </div>
         <canvas id="scatterChart" style="display:none;"></canvas>
       </div>
 
-      <!-- Histogram -->
       <div class="chart-box">
         <h4>Final Score Distribution</h4>
         <div class="chart-placeholder" id="histPlaceholder">
-          <span>📈</span>
-          Student 2: implement drawHistogram()
+          <span>📈</span>Student 2: implement drawHistogram()
         </div>
         <canvas id="histChart" style="display:none;"></canvas>
       </div>
 
-      <!-- Pie Chart -->
       <div class="chart-box">
-        <h4>Grade Distribution</h4>
+        <h4>Favorite AI Tool Breakdown</h4>
         <div class="chart-placeholder" id="piePlaceholder">
-          <span>🍕</span>
-          Student 2: implement drawPieChart()
+          <span>🤖</span>Student 2: implement drawPieChart()
         </div>
         <canvas id="pieChart" style="display:none;"></canvas>
       </div>
-
-    </div><!-- /chart-grid -->
+    </div>
   </section>
 
 
-  <!-- ═══════════════════════════════════════════════════
-       SECTION 3 — STATISTICS  (STUDENT 3)
-  ═══════════════════════════════════════════════════ -->
+  <!-- ═══ SECTION 3 — STATISTICS (STUDENT 3) ═══ -->
   <section class="section" id="sec-stats">
     <div class="section-header">
       <h2>03 · Statistical Analysis</h2>
@@ -801,7 +732,9 @@
     │  7. linearRegression(x,y) → { slope, intercept, rSquared }     │
     │  8. Call renderStats(window.DS) inside onDataReady()            │
     │                                                                 │
-    │  All functions accept plain JS arrays of numbers.              │
+    │  Analysis targets (Kaggle fields):                              │
+    │  - Primary metric: finalScore                                   │
+    │  - Correlation: studyHours → finalScore                         │
     │                                                                 │
     │  COMMITS EXPECTED:                                              │
     │  • "feat: implement mean, median, mode functions"               │
@@ -812,56 +745,51 @@
     └─────────────────────────────────────────────────────────────────┘
     -->
 
-    <div class="todo-callout" style="border-left-color: var(--accent3); color: var(--accent3); background: rgba(224,92,106,0.06); border-color: rgba(224,92,106,0.25);">
+    <div class="todo-callout" style="border-left-color:var(--accent3);color:var(--accent3);background:rgba(224,92,106,0.06);border-color:rgba(224,92,106,0.25);">
       <strong>⚠ TODO — Student 3</strong>
-      Implement all seven statistical functions below the comment block in the JS section.
-      Then call <code>renderStats(window.DS)</code> inside <code>onDataReady()</code>.
-      All placeholder "—" values below should be replaced by computed results.
+      Implement all seven statistical functions. Then call <code>renderStats(window.DS)</code>
+      inside <code>onDataReady()</code>. All "—" placeholders below should be replaced by computed results.
     </div>
 
-    <!-- Summary stat cards -->
     <div class="stats-grid">
       <div class="stat-card">
-        <div class="stat-label">Mean Score</div>
+        <div class="stat-label">Mean Final Score</div>
         <div class="stat-value" id="statMean"><span class="stat-placeholder">—</span></div>
-        <div class="stat-sub">Final Score</div>
+        <div class="stat-sub">Final Exam Score</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">Median Score</div>
+        <div class="stat-label">Median Final Score</div>
         <div class="stat-value" id="statMedian"><span class="stat-placeholder">—</span></div>
-        <div class="stat-sub">Final Score</div>
+        <div class="stat-sub">Final Exam Score</div>
       </div>
       <div class="stat-card">
         <div class="stat-label">Std Deviation</div>
         <div class="stat-value" id="statStdDev"><span class="stat-placeholder">—</span></div>
-        <div class="stat-sub">Final Score</div>
+        <div class="stat-sub">Final Exam Score</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">Mode</div>
-        <div class="stat-value" id="statMode"><span class="stat-placeholder">—</span></div>
-        <div class="stat-sub">Final Score</div>
+        <div class="stat-label">Mean GPA</div>
+        <div class="stat-value" id="statMeanGPA"><span class="stat-placeholder">—</span></div>
+        <div class="stat-sub">Across all students</div>
       </div>
     </div>
 
-    <!-- Detailed analysis panels -->
     <div class="analysis-row">
-
-      <!-- Descriptive stats table -->
       <div class="analysis-panel">
-        <h4>Descriptive Statistics — Final Score</h4>
+        <h4>Descriptive Statistics — Final Exam Score</h4>
         <ul class="stat-list">
           <li><span class="key">Count (n)</span>        <span class="val" id="dCount">—</span></li>
-          <li><span class="key">Min</span>              <span class="val" id="dMin">—</span></li>
-          <li><span class="key">Max</span>              <span class="val" id="dMax">—</span></li>
+          <li><span class="key">Min Score</span>        <span class="val" id="dMin">—</span></li>
+          <li><span class="key">Max Score</span>        <span class="val" id="dMax">—</span></li>
           <li><span class="key">Range</span>            <span class="val" id="dRange">—</span></li>
           <li><span class="key">Variance (σ²)</span>   <span class="val" id="dVariance">—</span></li>
           <li><span class="key">Std Dev (σ)</span>      <span class="val" id="dStdDev">—</span></li>
+          <li><span class="key">Mode (Score)</span>     <span class="val" id="dMode">—</span></li>
         </ul>
       </div>
 
-      <!-- Correlation & regression -->
       <div class="analysis-panel">
-        <h4>Correlation &amp; Regression (Study Hours → Score)</h4>
+        <h4>Correlation &amp; Regression (Study Hours/Day → Final Score)</h4>
         <ul class="stat-list">
           <li><span class="key">Pearson r</span>        <span class="val" id="rPearson">—</span></li>
           <li><span class="key">Interpretation</span>   <span class="val" id="rInterp">—</span></li>
@@ -871,76 +799,97 @@
           <li><span class="key">Equation</span>         <span class="val" id="rEquation">—</span></li>
         </ul>
       </div>
-
-    </div><!-- /analysis-row -->
+    </div>
   </section>
 
 </main>
 
 <footer>
-  DS COLLAB PROJECT · COMPUTER SCIENCE DEPT · GIT COLLABORATIVE ACTIVITY
-  <br>Each student's contribution is tracked via commits, branches, and pull requests.
+  DS COLLAB PROJECT · COMPUTER SCIENCE DEPT · GIT COLLABORATIVE ACTIVITY<br>
+  Dataset: Global University Students Performance &amp; Study Habits 2026 (Kaggle · asifxzaman)<br>
+  Each student's contribution is tracked via commits, branches, and pull requests.
 </footer>
 
 
 <!-- ═══════════════════════════════════════════════════════════════════
-     JAVASCRIPT — Three clearly separated contribution zones
+     JAVASCRIPT
 ═══════════════════════════════════════════════════════════════════ -->
 <script>
 "use strict";
 
 /* ─────────────────────────────────────────────────────────────────
-   SHARED DATASET (read-only — do NOT modify)
-   This simulates a CSV file already committed to the repository.
-   Structure: { name, studyHours, attendance, midterm, score,
-                assignments, sleep, job, grade }
+   SHARED DATASET — Sourced from Kaggle:
+   "Global University Students Performance & Study Habits 2026"
+   by asifxzaman · 10,000 records · 27 columns
+   Sample: first 20 records (S00001–S00020)
+
+   Fields:
+     studentId       — unique student ID (e.g. "S00001")
+     age             — student age (18–30)
+     gender          — "Male" | "Female"
+     country         — one of 10 countries
+     major           — one of 10 academic majors
+     year            — university year (1–4)
+     gpa             — GPA (1.92–4.00)
+     studyHours      — study hours per day
+     attendance      — class attendance percent
+     sleep           — sleep hours per night
+     screenTime      — total daily screen time (hrs)
+     socialMedia     — social media hours/day
+     gaming          — gaming hours/day
+     exercise        — exercise hours/week
+     partTimeJob     — "Yes" | "No"
+     relationship    — "Single" | "In a Relationship"
+     familyIncome    — "Low" | "Middle" | "High"
+     internet        — "Poor" | "Average" | "Good"
+     stress          — mental stress level (1–10)
+     aiUsage         — AI tool usage hours/day
+     favAiTool       — "ChatGPT" | "Claude" | "Gemini" | "Copilot" | "N/A"
+     noteTaking      — "Digital" | "Mixed" | "Handwritten"
+     examPrepDays    — days spent preparing for exam
+     coffee          — cups of coffee per day
+     extracurricular — extracurricular hours/week
+     finalScore      — final exam score (56–100)
+     assignmentScore — assignment score (60–100)
 ────────────────────────────────────────────────────────────────── */
 const RAW_DATA = [
-  { name:"Ana Reyes",       studyHours:18, attendance:95, midterm:87, score:91, assignments:10, sleep:7, job:false, grade:"A" },
-  { name:"Ben Santos",      studyHours:10, attendance:78, midterm:65, score:68, assignments:7,  sleep:6, job:true,  grade:"C" },
-  { name:"Clara Tan",       studyHours:22, attendance:98, midterm:94, score:97, assignments:10, sleep:8, job:false, grade:"A" },
-  { name:"Diego Flores",    studyHours:8,  attendance:60, midterm:52, score:55, assignments:5,  sleep:5, job:true,  grade:"D" },
-  { name:"Elena Cruz",      studyHours:15, attendance:88, midterm:78, score:82, assignments:9,  sleep:7, job:false, grade:"B" },
-  { name:"Felix Lim",       studyHours:12, attendance:82, midterm:72, score:75, assignments:8,  sleep:6, job:true,  grade:"C" },
-  { name:"Grace Mendoza",   studyHours:20, attendance:96, midterm:90, score:93, assignments:10, sleep:8, job:false, grade:"A" },
-  { name:"Henry Ong",       studyHours:6,  attendance:55, midterm:45, score:50, assignments:4,  sleep:5, job:true,  grade:"D" },
-  { name:"Iris Villanueva", studyHours:17, attendance:91, midterm:83, score:86, assignments:9,  sleep:7, job:false, grade:"B" },
-  { name:"Jay Aquino",      studyHours:14, attendance:85, midterm:76, score:79, assignments:8,  sleep:7, job:false, grade:"B" },
-  { name:"Karen Delos",     studyHours:9,  attendance:70, midterm:60, score:63, assignments:6,  sleep:6, job:true,  grade:"C" },
-  { name:"Luis Ramos",      studyHours:21, attendance:97, midterm:92, score:95, assignments:10, sleep:8, job:false, grade:"A" },
-  { name:"Maria Dela Cruz", studyHours:16, attendance:89, midterm:80, score:84, assignments:9,  sleep:7, job:true,  grade:"B" },
-  { name:"Noel Bautista",   studyHours:11, attendance:75, midterm:68, score:71, assignments:7,  sleep:6, job:false, grade:"C" },
-  { name:"Olivia Pascual",  studyHours:19, attendance:94, midterm:88, score:90, assignments:10, sleep:8, job:false, grade:"A" },
-  { name:"Paulo Jimenez",   studyHours:7,  attendance:62, midterm:50, score:53, assignments:5,  sleep:5, job:true,  grade:"D" },
-  { name:"Quinn Serrano",   studyHours:13, attendance:80, midterm:73, score:76, assignments:8,  sleep:7, job:false, grade:"C" },
-  { name:"Rosa Aguilar",    studyHours:23, attendance:99, midterm:96, score:98, assignments:10, sleep:9, job:false, grade:"A" },
-  { name:"Sam Torres",      studyHours:10, attendance:74, midterm:66, score:69, assignments:7,  sleep:6, job:true,  grade:"C" },
-  { name:"Tina Guerrero",   studyHours:15, attendance:87, midterm:79, score:81, assignments:9,  sleep:7, job:false, grade:"B" },
+  { studentId:"S00001", age:23, gender:"Female", country:"Germany",     major:"Law",              year:4, gpa:3.81, studyHours:4.2, attendance:96,  sleep:6.2, screenTime:3.9, socialMedia:3.3, gaming:0.0, exercise:2.1, partTimeJob:"Yes", relationship:"Single",            familyIncome:"High",   internet:"Average", stress:4.8, aiUsage:1.5, favAiTool:"Claude",  noteTaking:"Digital",     examPrepDays:15, coffee:3, extracurricular:7.6, finalScore:100, assignmentScore:100 },
+  { studentId:"S00002", age:26, gender:"Female", country:"USA",         major:"Economics",        year:2, gpa:3.46, studyHours:3.3, attendance:94,  sleep:6.6, screenTime:4.9, socialMedia:3.2, gaming:2.7, exercise:5.0, partTimeJob:"No",  relationship:"Single",            familyIncome:"Low",    internet:"Average", stress:3.9, aiUsage:2.3, favAiTool:"Gemini",  noteTaking:"Mixed",       examPrepDays:11, coffee:3, extracurricular:5.2, finalScore:100, assignmentScore:83  },
+  { studentId:"S00003", age:18, gender:"Female", country:"Canada",      major:"Medicine",         year:3, gpa:4.00, studyHours:4.5, attendance:100, sleep:6.3, screenTime:3.7, socialMedia:1.4, gaming:0.0, exercise:2.6, partTimeJob:"Yes", relationship:"In a Relationship", familyIncome:"High",   internet:"Average", stress:4.8, aiUsage:0.0, favAiTool:"N/A",     noteTaking:"Mixed",       examPrepDays:12, coffee:3, extracurricular:4.6, finalScore:100, assignmentScore:100 },
+  { studentId:"S00004", age:20, gender:"Male",   country:"Australia",   major:"Physics",          year:4, gpa:3.77, studyHours:5.8, attendance:97,  sleep:7.1, screenTime:6.9, socialMedia:3.7, gaming:2.1, exercise:3.2, partTimeJob:"No",  relationship:"Single",            familyIncome:"High",   internet:"Good",    stress:5.9, aiUsage:2.9, favAiTool:"Gemini",  noteTaking:"Mixed",       examPrepDays:11, coffee:1, extracurricular:4.0, finalScore:100, assignmentScore:98  },
+  { studentId:"S00005", age:28, gender:"Female", country:"Australia",   major:"Medicine",         year:2, gpa:4.00, studyHours:3.1, attendance:96,  sleep:8.4, screenTime:4.8, socialMedia:0.6, gaming:0.0, exercise:4.4, partTimeJob:"Yes", relationship:"In a Relationship", familyIncome:"Middle", internet:"Good",    stress:3.1, aiUsage:1.5, favAiTool:"ChatGPT", noteTaking:"Handwritten", examPrepDays:15, coffee:4, extracurricular:1.4, finalScore:100, assignmentScore:94  },
+  { studentId:"S00006", age:18, gender:"Male",   country:"France",      major:"Medicine",         year:2, gpa:4.00, studyHours:3.1, attendance:96,  sleep:6.1, screenTime:5.6, socialMedia:1.8, gaming:3.9, exercise:2.9, partTimeJob:"No",  relationship:"In a Relationship", familyIncome:"Low",    internet:"Good",    stress:5.0, aiUsage:1.3, favAiTool:"Claude",  noteTaking:"Digital",     examPrepDays:13, coffee:3, extracurricular:1.7, finalScore:96,  assignmentScore:94  },
+  { studentId:"S00007", age:27, gender:"Male",   country:"Netherlands", major:"Economics",        year:1, gpa:4.00, studyHours:5.9, attendance:100, sleep:8.2, screenTime:1.6, socialMedia:0.0, gaming:0.5, exercise:0.0, partTimeJob:"Yes", relationship:"In a Relationship", familyIncome:"Low",    internet:"Good",    stress:2.9, aiUsage:0.2, favAiTool:"N/A",     noteTaking:"Handwritten", examPrepDays:22, coffee:2, extracurricular:3.8, finalScore:100, assignmentScore:97  },
+  { studentId:"S00008", age:19, gender:"Male",   country:"Netherlands", major:"Law",              year:1, gpa:3.50, studyHours:4.7, attendance:89,  sleep:6.1, screenTime:7.7, socialMedia:5.1, gaming:1.7, exercise:5.1, partTimeJob:"No",  relationship:"Single",            familyIncome:"High",   internet:"Good",    stress:5.0, aiUsage:0.6, favAiTool:"Claude",  noteTaking:"Digital",     examPrepDays:10, coffee:0, extracurricular:0.0, finalScore:100, assignmentScore:93  },
+  { studentId:"S00009", age:20, gender:"Male",   country:"Japan",       major:"Biology",          year:3, gpa:3.72, studyHours:2.8, attendance:90,  sleep:6.0, screenTime:5.6, socialMedia:2.5, gaming:2.7, exercise:5.5, partTimeJob:"No",  relationship:"Single",            familyIncome:"High",   internet:"Average", stress:5.3, aiUsage:0.8, favAiTool:"Claude",  noteTaking:"Mixed",       examPrepDays:21, coffee:0, extracurricular:4.7, finalScore:100, assignmentScore:100 },
+  { studentId:"S00010", age:21, gender:"Female", country:"Japan",       major:"Economics",        year:2, gpa:3.47, studyHours:4.3, attendance:100, sleep:8.0, screenTime:8.8, socialMedia:6.1, gaming:0.1, exercise:0.0, partTimeJob:"No",  relationship:"Single",            familyIncome:"Low",    internet:"Good",    stress:6.2, aiUsage:0.0, favAiTool:"N/A",     noteTaking:"Handwritten", examPrepDays:3,  coffee:1, extracurricular:4.1, finalScore:92,  assignmentScore:99  },
+  { studentId:"S00011", age:26, gender:"Female", country:"Brazil",      major:"Biology",          year:2, gpa:3.24, studyHours:2.8, attendance:80,  sleep:8.1, screenTime:6.7, socialMedia:4.0, gaming:1.6, exercise:0.9, partTimeJob:"No",  relationship:"Single",            familyIncome:"Middle", internet:"Good",    stress:4.3, aiUsage:0.9, favAiTool:"Claude",  noteTaking:"Mixed",       examPrepDays:14, coffee:3, extracurricular:4.2, finalScore:100, assignmentScore:81  },
+  { studentId:"S00012", age:25, gender:"Female", country:"Italy",       major:"Economics",        year:3, gpa:3.57, studyHours:2.8, attendance:73,  sleep:8.0, screenTime:4.4, socialMedia:3.5, gaming:1.1, exercise:7.0, partTimeJob:"No",  relationship:"In a Relationship", familyIncome:"Middle", internet:"Good",    stress:3.2, aiUsage:0.3, favAiTool:"Copilot", noteTaking:"Handwritten", examPrepDays:4,  coffee:3, extracurricular:5.3, finalScore:92,  assignmentScore:88  },
+  { studentId:"S00013", age:24, gender:"Female", country:"France",      major:"Physics",          year:2, gpa:3.51, studyHours:3.9, attendance:100, sleep:5.4, screenTime:3.5, socialMedia:1.9, gaming:2.8, exercise:3.5, partTimeJob:"No",  relationship:"Single",            familyIncome:"Middle", internet:"Good",    stress:5.2, aiUsage:1.9, favAiTool:"Claude",  noteTaking:"Mixed",       examPrepDays:7,  coffee:1, extracurricular:1.2, finalScore:100, assignmentScore:94  },
+  { studentId:"S00014", age:26, gender:"Female", country:"Australia",   major:"Biology",          year:2, gpa:2.71, studyHours:0.6, attendance:77,  sleep:6.4, screenTime:3.7, socialMedia:1.2, gaming:2.8, exercise:3.0, partTimeJob:"Yes", relationship:"Single",            familyIncome:"Middle", internet:"Poor",    stress:4.8, aiUsage:0.0, favAiTool:"N/A",     noteTaking:"Handwritten", examPrepDays:7,  coffee:2, extracurricular:5.6, finalScore:74,  assignmentScore:87  },
+  { studentId:"S00015", age:26, gender:"Female", country:"USA",         major:"Computer Science", year:4, gpa:2.93, studyHours:0.9, attendance:71,  sleep:8.0, screenTime:2.9, socialMedia:3.6, gaming:2.0, exercise:2.1, partTimeJob:"Yes", relationship:"Single",            familyIncome:"Middle", internet:"Average", stress:3.4, aiUsage:1.0, favAiTool:"Copilot", noteTaking:"Mixed",       examPrepDays:7,  coffee:1, extracurricular:6.1, finalScore:92,  assignmentScore:85  },
+  { studentId:"S00016", age:19, gender:"Female", country:"USA",         major:"Computer Science", year:3, gpa:3.45, studyHours:2.7, attendance:84,  sleep:7.0, screenTime:6.5, socialMedia:2.7, gaming:0.0, exercise:0.9, partTimeJob:"No",  relationship:"Single",            familyIncome:"Middle", internet:"Average", stress:4.8, aiUsage:0.2, favAiTool:"N/A",     noteTaking:"Digital",     examPrepDays:9,  coffee:2, extracurricular:2.0, finalScore:100, assignmentScore:99  },
+  { studentId:"S00017", age:21, gender:"Female", country:"Germany",     major:"Engineering",      year:2, gpa:3.30, studyHours:2.0, attendance:85,  sleep:5.7, screenTime:2.2, socialMedia:0.8, gaming:0.8, exercise:2.6, partTimeJob:"Yes", relationship:"Single",            familyIncome:"High",   internet:"Average", stress:3.8, aiUsage:1.2, favAiTool:"Gemini",  noteTaking:"Handwritten", examPrepDays:23, coffee:1, extracurricular:1.5, finalScore:96,  assignmentScore:98  },
+  { studentId:"S00018", age:24, gender:"Male",   country:"Brazil",      major:"Law",              year:4, gpa:4.00, studyHours:4.0, attendance:100, sleep:7.5, screenTime:4.3, socialMedia:0.5, gaming:1.4, exercise:4.9, partTimeJob:"Yes", relationship:"Single",            familyIncome:"Middle", internet:"Good",    stress:2.5, aiUsage:3.6, favAiTool:"Copilot", noteTaking:"Mixed",       examPrepDays:8,  coffee:1, extracurricular:5.0, finalScore:100, assignmentScore:100 },
+  { studentId:"S00019", age:25, gender:"Female", country:"South Korea", major:"Biology",          year:1, gpa:2.97, studyHours:2.1, attendance:72,  sleep:6.1, screenTime:5.1, socialMedia:1.4, gaming:3.1, exercise:3.0, partTimeJob:"No",  relationship:"Single",            familyIncome:"Middle", internet:"Average", stress:5.2, aiUsage:2.9, favAiTool:"Claude",  noteTaking:"Handwritten", examPrepDays:4,  coffee:2, extracurricular:0.3, finalScore:87,  assignmentScore:67  },
+  { studentId:"S00020", age:21, gender:"Female", country:"Netherlands", major:"Business",         year:4, gpa:2.60, studyHours:1.4, attendance:74,  sleep:9.2, screenTime:7.8, socialMedia:5.5, gaming:0.0, exercise:4.2, partTimeJob:"Yes", relationship:"Single",            familyIncome:"Low",    internet:"Average", stress:3.9, aiUsage:0.7, favAiTool:"Gemini",  noteTaking:"Handwritten", examPrepDays:14, coffee:1, extracurricular:4.2, finalScore:87,  assignmentScore:75  },
 ];
 
 /* Global dataset — Student 1 sets this; Students 2 & 3 read from it */
 window.DS = [];
 
-/* Chart instances registry — Student 2 uses this to destroy old charts */
+/* Chart instances registry */
 window.CHARTS = {};
 
-/* Called automatically when the dataset is ready (Student 1 triggers this) */
+/* Called automatically when the dataset is ready */
 function onDataReady() {
   initCharts();
   renderStats(window.DS);
-
   console.log("onDataReady() fired. window.DS has", window.DS.length, "rows.");
 }
 
 
 /* ═══════════════════════════════════════════════════════════════════
-   ███████╗████████╗██╗   ██╗██████╗ ███████╗███╗   ██╗████████╗
-   ██╔════╝╚══██╔══╝██║   ██║██╔══██╗██╔════╝████╗  ██║╚══██╔══╝
-   ███████╗   ██║   ██║   ██║██║  ██║█████╗  ██╔██╗ ██║   ██║
-   ╚════██║   ██║   ██║   ██║██║  ██║██╔══╝  ██║╚██╗██║   ██║
-   ███████║   ██║   ╚██████╔╝██████╔╝███████╗██║ ╚████║   ██║
-   ╚══════╝   ╚═╝    ╚═════╝ ╚═════╝ ╚══════╝╚═╝  ╚═══╝   ╚═╝
-
    STUDENT 1 — DATASET ENGINE & TABLE (branch: feature/data-engine)
 ═══════════════════════════════════════════════════════════════════ */
 
@@ -958,43 +907,65 @@ function renderTable(data) {
   if (data.length === 0) {
     tbody.innerHTML = `
       <tr>
-        <td colspan="10" style="text-align:center; color:var(--text-dim); font-family:var(--mono); padding:40px;">
+        <td colspan="28" style="text-align:center;color:var(--text-dim);font-family:var(--mono);padding:40px;">
           ⚠ No results found.
         </td>
       </tr>`;
     return;
   }
 
-  data.forEach((student, index) => {
+  data.forEach((s, i) => {
     const row = document.createElement('tr');
     row.innerHTML = `
-      <td>${index + 1}</td>
-      <td>${student.name}</td>
-      <td class="numeric">${student.studyHours}</td>
-      <td class="numeric">${student.attendance}</td>
-      <td class="numeric">${student.midterm}</td>
-      <td class="numeric">${student.score}</td>
-      <td class="numeric">${student.assignments}</td>
-      <td class="numeric">${student.sleep}</td>
-      <td>${student.job ? 'Yes' : 'No'}</td>
-      <td class="grade-${student.grade}">${student.grade}</td>
+      <td>${i + 1}</td>
+      <td class="highlight">${s.studentId}</td>
+      <td class="numeric">${s.age}</td>
+      <td>${s.gender}</td>
+      <td>${s.country}</td>
+      <td>${s.major}</td>
+      <td class="numeric">Yr ${s.year}</td>
+      <td class="numeric">${s.gpa.toFixed(2)}</td>
+      <td class="numeric">${s.studyHours}</td>
+      <td class="numeric">${s.attendance}%</td>
+      <td class="numeric">${s.sleep}</td>
+      <td class="numeric">${s.screenTime}</td>
+      <td class="numeric">${s.socialMedia}</td>
+      <td class="numeric">${s.gaming}</td>
+      <td class="numeric">${s.exercise}</td>
+      <td class="${s.partTimeJob === 'Yes' ? 'warn' : ''}">${s.partTimeJob}</td>
+      <td>${s.relationship}</td>
+      <td>${s.familyIncome}</td>
+      <td>${s.internet}</td>
+      <td class="numeric">${s.stress}</td>
+      <td class="numeric">${s.aiUsage}</td>
+      <td>${s.favAiTool}</td>
+      <td>${s.noteTaking}</td>
+      <td class="numeric">${s.examPrepDays}</td>
+      <td class="numeric">${s.coffee}</td>
+      <td class="numeric">${s.extracurricular}</td>
+      <td class="numeric ${s.finalScore >= 90 ? 'good' : s.finalScore < 75 ? 'warn' : ''}">${s.finalScore}</td>
+      <td class="numeric ${s.assignmentScore >= 90 ? 'good' : s.assignmentScore < 75 ? 'warn' : ''}">${s.assignmentScore}</td>
     `;
     tbody.appendChild(row);
-
   });
 }
 
 function applyFilterSort() {
-   const filterVal = document.getElementById('filterInput').value.trim().toLowerCase();
-  const sortKey   = document.getElementById('sortSelect').value;
+  const text        = document.getElementById('filterInput').value.trim().toLowerCase();
+  const sortKey     = document.getElementById('sortSelect').value;
+  const country     = document.getElementById('filterCountry').value;
+  const major       = document.getElementById('filterMajor').value;
 
-  let result = window.DS.filter(s =>
-    s.name.toLowerCase().includes(filterVal)
-  );
+  let result = window.DS.filter(s => {
+    const matchText    = !text    || s.studentId.toLowerCase().includes(text) || s.country.toLowerCase().includes(text) || s.major.toLowerCase().includes(text) || s.gender.toLowerCase().includes(text);
+    const matchCountry = !country || s.country === country;
+    const matchMajor   = !major   || s.major === major;
+    return matchText && matchCountry && matchMajor;
+  });
 
   if (sortKey) {
     result.sort((a, b) => {
-      if (sortKey === 'name') return a.name.localeCompare(b.name);
+      if (sortKey === 'studentId') return a.studentId.localeCompare(b.studentId);
       return b[sortKey] - a[sortKey]; // numeric descending
     });
   }
@@ -1004,37 +975,27 @@ function applyFilterSort() {
 }
 
 function resetTable() {
-  document.getElementById('filterInput').value = '';
-  document.getElementById('sortSelect').value = '';
+  document.getElementById('filterInput').value   = '';
+  document.getElementById('sortSelect').value    = '';
+  document.getElementById('filterCountry').value = '';
+  document.getElementById('filterMajor').value   = '';
   renderTable(window.DS);
   document.getElementById('rowCount').textContent = window.DS.length + ' rows';
 }
 
-/* Student 1 entry point — runs when DOM is ready */
 document.addEventListener('DOMContentLoaded', () => {
-  loadDataset(); // TODO: This call is already here — just implement the function above
+  loadDataset();
 });
 
 
 /* ═══════════════════════════════════════════════════════════════════
-   ██╗   ██╗██╗███████╗██╗   ██╗ █████╗ ██╗     ██╗███████╗
-   ██║   ██║██║██╔════╝██║   ██║██╔══██╗██║     ██║╚════██╗
-   ██║   ██║██║███████╗██║   ██║███████║██║     ██║    ██╔╝
-   ╚██╗ ██╔╝██║╚════██║██║   ██║██╔══██║██║     ██║   ██╔╝
-    ╚████╔╝ ██║███████║╚██████╔╝██║  ██║███████╗██║   ██║
-     ╚═══╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝   ╚═╝
-
    STUDENT 2 — VISUALIZATION LAYER (branch: feature/visualization)
 ═══════════════════════════════════════════════════════════════════ */
 
 /**
  * STUDENT 2 TODO — initCharts()
- *
- * PURPOSE: Entry point. Called from onDataReady() after data is loaded.
- * Call all four draw functions here, passing window.DS.
- *
- * IMPORTANT: Destroy any existing Chart instance before creating a new one.
- * Use window.CHARTS to track instances:
+ * Entry point called from onDataReady(). Call all four draw functions here.
+ * Always destroy old chart instances before creating new ones:
  *   if (window.CHARTS['barChart']) window.CHARTS['barChart'].destroy();
  */
 function initCharts() {
@@ -1044,32 +1005,32 @@ function initCharts() {
   drawPieChart('pieChart', window.DS);
 }
 
+/**
+ * drawBarChart(canvasId, data)
+ * Chart: Study Hours/Day (x-axis, sorted) vs Final Score (y-axis)
+ * Each bar = one student (use first name from studentId label or index)
+ */
 function drawBarChart(canvasId, data) {
   if (window.CHARTS[canvasId]) window.CHARTS[canvasId].destroy();
 
   const sorted = [...data].sort((a, b) => a.studyHours - b.studyHours);
-
-  const labels = sorted.map(d => d.name.split(' ')[0]);
-  const scores = sorted.map(d => d.score);
+  const labels = sorted.map(d => d.studentId);
+  const scores = sorted.map(d => d.finalScore);
 
   const ctx = document.getElementById(canvasId).getContext('2d');
-
   window.CHARTS[canvasId] = new Chart(ctx, {
     type: 'bar',
     data: {
       labels,
       datasets: [{
-        label: 'Final Score',
+        label: 'Final Exam Score',
         data: scores,
         backgroundColor: 'rgba(240,180,41,0.8)'
       }]
     },
     options: {
       ...getChartDefaults(),
-      scales: {
-        ...getChartDefaults().scales,
-        y: { ...getChartDefaults().scales.y, min: 0, max: 100 }
-      }
+      scales: { ...getChartDefaults().scales, y: { ...getChartDefaults().scales.y, min: 50, max: 100 } }
     }
   });
 
@@ -1077,17 +1038,17 @@ function drawBarChart(canvasId, data) {
   document.getElementById(canvasId).style.display = 'block';
 }
 
+/**
+ * drawScatterPlot(canvasId, data)
+ * Chart: GPA (x-axis) vs Final Exam Score (y-axis)
+ * Tooltip shows: studentId, country, major
+ */
 function drawScatterPlot(canvasId, data) {
   if (window.CHARTS[canvasId]) window.CHARTS[canvasId].destroy();
 
-  const points = data.map(d => ({
-    x: d.attendance,
-    y: d.score,
-    name: d.name
-  }));
+  const points = data.map(d => ({ x: d.gpa, y: d.finalScore, id: d.studentId, country: d.country, major: d.major }));
 
   const ctx = document.getElementById(canvasId).getContext('2d');
-
   window.CHARTS[canvasId] = new Chart(ctx, {
     type: 'scatter',
     data: {
@@ -1103,9 +1064,9 @@ function drawScatterPlot(canvasId, data) {
         ...getChartDefaults().plugins,
         tooltip: {
           callbacks: {
-            label: (ctx) => {
+            label: ctx => {
               const p = ctx.raw;
-              return `${p.name}: (${p.x}%, ${p.y})`;
+              return `${p.id} | GPA: ${p.x} → Score: ${p.y} | ${p.country} · ${p.major}`;
             }
           }
         }
@@ -1117,28 +1078,29 @@ function drawScatterPlot(canvasId, data) {
   document.getElementById(canvasId).style.display = 'block';
 }
 
+/**
+ * drawHistogram(canvasId, data)
+ * Distribution of Final Exam Scores in bins: 50s, 60s, 70s, 80s, 90s, 100
+ */
 function drawHistogram(canvasId, data) {
   if (window.CHARTS[canvasId]) window.CHARTS[canvasId].destroy();
 
-  const bins = [40,50,60,70,80,90,101];
-  const counts = [0,0,0,0,0,0];
+  const bins   = [50, 60, 70, 80, 90, 100, 101];
+  const counts = new Array(bins.length - 1).fill(0);
 
   data.forEach(d => {
     for (let i = 0; i < bins.length - 1; i++) {
-      if (d.score >= bins[i] && d.score < bins[i + 1]) {
-        counts[i]++;
-        break;
-      }
+      if (d.finalScore >= bins[i] && d.finalScore < bins[i + 1]) { counts[i]++; break; }
     }
   });
 
   const ctx = document.getElementById(canvasId).getContext('2d');
-
   window.CHARTS[canvasId] = new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: ['40s','50s','60s','70s','80s','90s+'],
+      labels: ['50–59', '60–69', '70–79', '80–89', '90–99', '100'],
       datasets: [{
+        label: 'Students',
         data: counts,
         backgroundColor: 'rgba(224,92,106,0.75)',
         barPercentage: 1.0,
@@ -1152,25 +1114,31 @@ function drawHistogram(canvasId, data) {
   document.getElementById(canvasId).style.display = 'block';
 }
 
+/**
+ * drawPieChart(canvasId, data)
+ * Breakdown of favAiTool: ChatGPT, Claude, Gemini, Copilot, N/A
+ */
 function drawPieChart(canvasId, data) {
   if (window.CHARTS[canvasId]) window.CHARTS[canvasId].destroy();
 
-  const counts = { A:0, B:0, C:0, D:0 };
+  const counts = { ChatGPT:0, Claude:0, Gemini:0, Copilot:0, 'N/A':0 };
+  data.forEach(d => {
+    if (counts[d.favAiTool] !== undefined) counts[d.favAiTool]++;
+    else counts['N/A']++;
+  });
 
-  data.forEach(d => counts[d.grade]++);
-
-  const values = [counts.A, counts.B, counts.C, counts.D];
-  const total = values.reduce((a,b)=>a+b,0);
+  const labels = Object.keys(counts);
+  const values = Object.values(counts);
+  const total  = values.reduce((a, b) => a + b, 0);
 
   const ctx = document.getElementById(canvasId).getContext('2d');
-
   window.CHARTS[canvasId] = new Chart(ctx, {
     type: 'doughnut',
     data: {
-      labels: ['A','B','C','D'],
+      labels,
       datasets: [{
         data: values,
-        backgroundColor: ['#56d364','#f0b429','#3ecfcf','#e05c6a']
+        backgroundColor: ['#56d364', '#f0b429', '#3ecfcf', '#e05c6a', '#6b748f']
       }]
     },
     options: {
@@ -1180,10 +1148,10 @@ function drawPieChart(canvasId, data) {
         ...getChartDefaults().plugins,
         tooltip: {
           callbacks: {
-            label: (ctx) => {
+            label: ctx => {
               const val = ctx.raw;
               const pct = ((val / total) * 100).toFixed(1);
-              return `${ctx.label}: ${val} (${pct}%)`;
+              return `${ctx.label}: ${val} students (${pct}%)`;
             }
           }
         }
@@ -1197,19 +1165,14 @@ function drawPieChart(canvasId, data) {
 
 /**
  * STUDENT 2 HELPER — getChartDefaults()
- * Pre-configured Chart.js global options matching the dark theme.
- * Use or extend this in your chart configs.
- *
- * @returns {Object} Chart.js options object
+ * Pre-configured Chart.js options for the dark theme.
  */
 function getChartDefaults() {
   return {
     responsive: true,
     maintainAspectRatio: true,
     plugins: {
-      legend: {
-        labels: { color: '#6b748f', font: { family: 'Courier Prime', size: 11 } }
-      },
+      legend: { labels: { color: '#6b748f', font: { family: 'Courier Prime', size: 11 } } },
       tooltip: {
         backgroundColor: '#1c2030',
         borderColor: '#2a2f45',
@@ -1221,88 +1184,46 @@ function getChartDefaults() {
       }
     },
     scales: {
-      x: {
-        ticks: { color: '#6b748f', font: { family: 'Courier Prime', size: 10 } },
-        grid:  { color: '#2a2f45' }
-      },
-      y: {
-        ticks: { color: '#6b748f', font: { family: 'Courier Prime', size: 10 } },
-        grid:  { color: '#2a2f45' }
-      }
+      x: { ticks: { color: '#6b748f', font: { family: 'Courier Prime', size: 10 } }, grid: { color: '#2a2f45' } },
+      y: { ticks: { color: '#6b748f', font: { family: 'Courier Prime', size: 10 } }, grid: { color: '#2a2f45' } }
     }
   };
 }
 
 
 /* ═══════════════════════════════════════════════════════════════════
-   ███████╗████████╗ █████╗ ████████╗███████╗
-   ██╔════╝╚══██╔══╝██╔══██╗╚══██╔══╝██╔════╝
-   ███████╗   ██║   ███████║   ██║   ███████╗
-   ╚════██║   ██║   ██╔══██║   ██║   ╚════██║
-   ███████║   ██║   ██║  ██║   ██║   ███████║
-   ╚══════╝   ╚═╝   ╚═╝  ╚═╝   ╚═╝   ╚══════╝
-
    STUDENT 3 — STATISTICAL ANALYSIS ENGINE (branch: feature/statistics)
 ═══════════════════════════════════════════════════════════════════ */
 
 /**
- * mean(arr)
- *
- * PURPOSE: Compute the arithmetic mean of a numeric array.
- *
- * @param  {number[]} arr - Array of numbers
- * @returns {number}       Mean value, rounded to 2 decimal places
- *
+ * mean(arr) — arithmetic average
  * FORMULA: μ = (Σxᵢ) / n
- *
- * Commit: "feat: implement mean, median, mode functions"
  */
 function mean(arr) {
   if (!arr || arr.length === 0) return 0;
-  const sum = arr.reduce((acc, val) => acc + val, 0);
-  return +( sum / arr.length ).toFixed(2);
+  return +(arr.reduce((acc, v) => acc + v, 0) / arr.length).toFixed(2);
 }
 
 /**
- * median(arr)
- *
- * PURPOSE: Find the middle value of a sorted array.
- *          For even-length arrays, average the two middle values.
- *
- * @param  {number[]} arr - Array of numbers
- * @returns {number}       Median, rounded to 2 decimal places
- *
- * Commit: "feat: implement mean, median, mode functions"
+ * median(arr) — middle value of sorted array
+ * For even-length arrays, average the two middle values.
  */
 function median(arr) {
   if (!arr || arr.length === 0) return 0;
-  const sorted = [...arr].sort((a, b) => a - b); // sorted copy — original untouched
-  const n   = sorted.length;
-  const mid = Math.floor(n / 2);
-  return n % 2 === 1
-    ? +sorted[mid].toFixed(2)
-    : +( (sorted[mid - 1] + sorted[mid]) / 2 ).toFixed(2);
+  const sorted = [...arr].sort((a, b) => a - b);
+  const n = sorted.length, mid = Math.floor(n / 2);
+  return n % 2 === 1 ? +sorted[mid].toFixed(2) : +((sorted[mid-1] + sorted[mid]) / 2).toFixed(2);
 }
 
 /**
- * mode(arr)
- *
- * PURPOSE: Find the most frequently occurring value(s).
- *          If multiple values tie, return all of them joined by " & ".
- *
- * @param  {number[]} arr - Array of numbers
- * @returns {string}       Mode value(s) as a string
- *
- * Commit: "feat: implement mean, median, mode functions"
+ * mode(arr) — most frequently occurring value(s)
+ * If multiple values tie, return all joined by " & "
  */
 function mode(arr) {
   if (!arr || arr.length === 0) return '—';
-  // 1. Build frequency map
   const freq = {};
   arr.forEach(v => { freq[v] = (freq[v] || 0) + 1; });
-  // 2. Find maximum frequency
   const maxCount = Math.max(...Object.values(freq));
-  // 3. Collect all values with that frequency and return
   return Object.keys(freq)
     .filter(k => freq[k] === maxCount)
     .map(Number)
@@ -1311,139 +1232,92 @@ function mode(arr) {
 }
 
 /**
- * variance(arr)
- *
- * PURPOSE: Compute the population variance of a numeric array.
- *
- * @param  {number[]} arr - Array of numbers
- * @returns {number}       Variance σ², rounded to 2 decimal places
- *
+ * variance(arr) — population variance
  * FORMULA: σ² = (Σ(xᵢ − μ)²) / n
- *
- * Commit: "feat: implement variance and standard deviation"
  */
 function variance(arr) {
   if (!arr || arr.length === 0) return 0;
   const μ = mean(arr);
-  const sumSqDiff = arr.reduce((acc, val) => acc + Math.pow(val - μ, 2), 0);
-  return +( sumSqDiff / arr.length ).toFixed(2);
+  return +(arr.reduce((acc, v) => acc + Math.pow(v - μ, 2), 0) / arr.length).toFixed(2);
 }
 
 /**
- * stdDev(arr)
- *
- * PURPOSE: Standard deviation — square root of population variance.
- *
- * @param  {number[]} arr - Array of numbers
- * @returns {number}       σ, rounded to 2 decimal places
- *
+ * stdDev(arr) — standard deviation
  * FORMULA: σ = √(variance(arr))
- *
- * Commit: "feat: implement variance and standard deviation"
  */
 function stdDev(arr) {
   return +Math.sqrt(variance(arr)).toFixed(2);
 }
 
 /**
- * pearsonCorr(x, y)
- *
- * PURPOSE: Pearson correlation coefficient r between two arrays.
- *          r ranges from -1 (perfect negative) to +1 (perfect positive).
- *
- * @param  {number[]} x - Independent variable values
- * @param  {number[]} y - Dependent variable values (same length as x)
- * @returns {number}      r, rounded to 4 decimal places
- *
+ * pearsonCorr(x, y) — Pearson correlation coefficient r
  * FORMULA: r = Σ((xᵢ−x̄)(yᵢ−ȳ)) / √(Σ(xᵢ−x̄)² · Σ(yᵢ−ȳ)²)
- *
- * Commit: "feat: implement Pearson correlation coefficient"
  */
 function pearsonCorr(x, y) {
-  const n  = x.length;
-  const mx = mean(x);
-  const my = mean(y);
-  let numerator = 0, denomX = 0, denomY = 0;
+  const n = x.length, mx = mean(x), my = mean(y);
+  let num = 0, dx2 = 0, dy2 = 0;
   for (let i = 0; i < n; i++) {
-    const dx = x[i] - mx;
-    const dy = y[i] - my;
-    numerator += dx * dy;
-    denomX    += dx * dx;
-    denomY    += dy * dy;
+    const dx = x[i] - mx, dy = y[i] - my;
+    num += dx * dy; dx2 += dx * dx; dy2 += dy * dy;
   }
-  const denom = Math.sqrt(denomX * denomY);
-  return denom === 0 ? 0 : +( numerator / denom ).toFixed(4);
+  const denom = Math.sqrt(dx2 * dy2);
+  return denom === 0 ? 0 : +(num / denom).toFixed(4);
 }
 
 /**
- * linearRegression(x, y)
- *
- * PURPOSE: Simple linear regression — find the best-fit line y = mx + b.
- *
- * @param  {number[]} x - Independent variable values
- * @param  {number[]} y - Dependent variable values
- * @returns {{ slope: number, intercept: number, rSquared: number }}
- *
+ * linearRegression(x, y) — simple linear regression
+ * Returns: { slope, intercept, rSquared }
  * FORMULAS:
- *   m (slope)     = Σ((xᵢ−x̄)(yᵢ−ȳ)) / Σ(xᵢ−x̄)²
- *   b (intercept) = ȳ − m·x̄
- *   R²            = r²  (Pearson r squared)
- *
- * Commit: "feat: implement linear regression with R-squared"
+ *   m = Σ((xᵢ−x̄)(yᵢ−ȳ)) / Σ(xᵢ−x̄)²
+ *   b = ȳ − m·x̄
+ *   R² = r²
  */
 function linearRegression(x, y) {
-  const mx = mean(x);
-  const my = mean(y);
+  const mx = mean(x), my = mean(y);
   let num = 0, den = 0;
   for (let i = 0; i < x.length; i++) {
     const dx = x[i] - mx;
     num += dx * (y[i] - my);
     den += dx * dx;
   }
-  const slope     = den !== 0 ? +( num / den ).toFixed(4) : 0;
-  const intercept = +( my - slope * mx ).toFixed(4);
+  const slope     = den !== 0 ? +(num / den).toFixed(4) : 0;
+  const intercept = +(my - slope * mx).toFixed(4);
   const r         = pearsonCorr(x, y);
-  const rSquared  = +( r * r ).toFixed(4);
+  const rSquared  = +(r * r).toFixed(4);
   return { slope, intercept, rSquared };
 }
 
 /**
- * renderStats(data)
- *
- * PURPOSE: Compute all statistics from data and update the DOM.
- *          Called from onDataReady() after Student 1 loads the dataset.
- *
- * @param {Array} data - window.DS array
- *
- * Commit: "feat: wire renderStats to display results in the DOM"
+ * renderStats(data) — compute all stats and update the DOM
+ * Called from onDataReady() after Student 1 loads the dataset.
+ * Uses Kaggle fields: finalScore, studyHours, gpa
  */
 function renderStats(data) {
   try {
-    const scores = data.map(d => d.score);
+    const scores = data.map(d => d.finalScore);
     const hours  = data.map(d => d.studyHours);
+    const gpas   = data.map(d => d.gpa);
 
-    // ── Summary stat cards ──────────────────────────
-    document.getElementById('statMean').textContent   = mean(scores);
-    document.getElementById('statMedian').textContent = median(scores);
-    document.getElementById('statStdDev').textContent = stdDev(scores);
-    document.getElementById('statMode').textContent   = mode(scores);
+    // Summary cards
+    document.getElementById('statMean').textContent    = mean(scores);
+    document.getElementById('statMedian').textContent  = median(scores);
+    document.getElementById('statStdDev').textContent  = stdDev(scores);
+    document.getElementById('statMeanGPA').textContent = mean(gpas);
 
-    // ── Descriptive statistics panel ────────────────
-    const minScore = Math.min(...scores);
-    const maxScore = Math.max(...scores);
+    // Descriptive stats
+    const minS = Math.min(...scores), maxS = Math.max(...scores);
     document.getElementById('dCount').textContent    = data.length;
-    document.getElementById('dMin').textContent      = minScore;
-    document.getElementById('dMax').textContent      = maxScore;
-    document.getElementById('dRange').textContent    = maxScore - minScore;
+    document.getElementById('dMin').textContent      = minS;
+    document.getElementById('dMax').textContent      = maxS;
+    document.getElementById('dRange').textContent    = maxS - minS;
     document.getElementById('dVariance').textContent = variance(scores);
     document.getElementById('dStdDev').textContent   = stdDev(scores);
+    document.getElementById('dMode').textContent     = mode(scores);
 
-    // ── Correlation & regression panel ──────────────
+    // Correlation & regression: studyHours → finalScore
     const r   = pearsonCorr(hours, scores);
     const reg = linearRegression(hours, scores);
-
-    // Interpret the Pearson r value
-    const absR      = Math.abs(r);
+    const absR = Math.abs(r);
     const strength  = absR >= 0.7 ? 'Strong' : absR >= 0.4 ? 'Moderate' : 'Weak';
     const direction = r >= 0 ? 'Positive' : 'Negative';
 
@@ -1453,7 +1327,7 @@ function renderStats(data) {
     document.getElementById('rIntercept').textContent = reg.intercept;
     document.getElementById('rSquared').textContent   = reg.rSquared;
     document.getElementById('rEquation').textContent  =
-      `score = ${reg.slope}·hours + ${reg.intercept}`;
+      `finalScore = ${reg.slope}·studyHours + ${reg.intercept}`;
   } catch (err) {
     console.error("renderStats error:", err);
   }
@@ -1463,6 +1337,5 @@ function renderStats(data) {
    END OF STUDENT CONTRIBUTION ZONES
 ────────────────────────────────────────────────────────────────── */
 </script>
-
 </body>
 </html>
