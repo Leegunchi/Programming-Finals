@@ -606,34 +606,34 @@
         <table id="dataTable">
           <thead>
             <tr>
-              <th>#</th>
-              <th>Student ID</th>
-              <th>Age</th>
-              <th>Gender</th>
-              <th>Country</th>
-              <th>Major</th>
-              <th>Year</th>
-              <th>GPA</th>
-              <th>Study Hrs/Day</th>
-              <th>Attendance %</th>
-              <th>Sleep Hrs</th>
-              <th>Screen Time</th>
-              <th>Social Media</th>
-              <th>Gaming</th>
-              <th>Exercise/Wk</th>
-              <th>Part-time Job</th>
-              <th>Relationship</th>
-              <th>Family Income</th>
-              <th>Internet</th>
-              <th>Stress</th>
-              <th>AI Usage</th>
-              <th>Fav AI Tool</th>
-              <th>Note Taking</th>
-              <th>Exam Prep Days</th>
-              <th>Coffee/Day</th>
-              <th>Extracurr/Wk</th>
-              <th>Final Score</th>
-              <th>Assignment Score</th>
+              <th onclick="sortData(window.DS, '#')" style="cursor:pointer">#</th>
+              <th onclick="sortData(window.DS, 'Student ID')" style="cursor:pointer">Student ID</th>
+              <th onclick="sortData(window.DS, 'Age')" style="cursor:pointer">Age</th>
+              <th onclick="sortData(window.DS, 'Gender')" style="cursor:pointer">Gender</th>
+              <th onclick="sortData(window.DS, 'Country')" style="cursor:pointer">Country</th>
+              <th onclick="sortData(window.DS, 'Major')" style="cursor:pointer">Major</th>
+              <th onclick="sortData(window.DS, 'Year')" style="cursor:pointer">Year</th>
+              <th onclick="sortData(window.DS, 'GPA')" style="cursor:pointer">GPA</th>
+              <th onclick="sortData(window.DS, 'Study Hrs/Day')" style="cursor:pointer">Study Hrs/Day</th>
+              <th onclick="sortData(window.DS, 'Attendance %')" style="cursor:pointer">Attendance %</th>
+              <th onclick="sortData(window.DS, 'Sleep Hrs')" style="cursor:pointer">Sleep Hrs</th>
+              <th onclick="sortData(window.DS, 'Screen Time')" style="cursor:pointer">Screen Time</th>
+              <th onclick="sortData(window.DS, 'Social Media')" style="cursor:pointer">Social Media</th>
+              <th onclick="sortData(window.DS, 'Gaming')" style="cursor:pointer">Gaming</th>
+              <th onclick="sortData(window.DS, 'Exercise/Wk')" style="cursor:pointer">Exercise/Wk</th>
+              <th onclick="sortData(window.DS, 'Part-time Job')" style="cursor:pointer">Part-time Job</th>
+              <th onclick="sortData(window.DS, 'Relationship')" style="cursor:pointer">Relationship</th>
+              <th onclick="sortData(window.DS, 'Family Income')" style="cursor:pointer">Family Income</th>
+              <th onclick="sortData(window.DS, 'Internet')" style="cursor:pointer">Internet</th>
+              <th onclick="sortData(window.DS, 'Stress')" style="cursor:pointer">Stress</th>
+              <th onclick="sortData(window.DS, 'AI Usage')" style="cursor:pointer">AI Usage</th>
+              <th onclick="sortData(window.DS, 'Fav AI Tool')" style="cursor:pointer">Fav AI Tool</th>
+              <th onclick="sortData(window.DS, 'Note Taking')" style="cursor:pointer">Note Taking</th>
+              <th onclick="sortData(window.DS, 'Exam Prep Days')" style="cursor:pointer">Exam Prep Days</th>
+              <th onclick="sortData(window.DS, 'Coffee/Day')" style="cursor:pointer">Coffee/Day</th>
+              <th onclick="sortData(window.DS, 'Extracurr/Wk')" style="cursor:pointer">Extracurr/Wk</th>
+              <th onclick="sortData(window.DS, 'Final Score')" style="cursor:pointer">Final Score</th>
+              <th onclick="sortData(window.DS, 'Assignment Score')" style="cursor:pointer">Assignment Score</th>
             </tr>
           </thead>
           <tbody id="tableBody">
@@ -969,6 +969,8 @@ function renderTable(data) {
   });
 }
 
+window.currentSort = { key: '', direction: 'desc' }; 
+
 function applyFilterSort() {
   const text    = document.getElementById('filterInput').value.trim().toLowerCase();
   const sortKey = document.getElementById('sortSelect').value;
@@ -976,21 +978,50 @@ function applyFilterSort() {
   const major   = document.getElementById('filterMajor').value;
 
   let result = window.DS.filter(s => {
-    const matchText    = !text    || s.studentId.toLowerCase().includes(text) || s.country.toLowerCase().includes(text) || s.major.toLowerCase().includes(text) || s.gender.toLowerCase().includes(text);
+    const matchText    = !text || s.studentId.toLowerCase().includes(text) || 
+                         s.country.toLowerCase().includes(text) || 
+                         s.major.toLowerCase().includes(text);
     const matchCountry = !country || s.country === country;
     const matchMajor   = !major   || s.major === major;
     return matchText && matchCountry && matchMajor;
   });
 
   if (sortKey) {
-    result.sort((a, b) => {
-      if (sortKey === 'studentId') return a.studentId.localeCompare(b.studentId);
-      return b[sortKey] - a[sortKey];
-    });
+    // If the same key is picked, we could toggle direction, 
+    // but for a dropdown, we'll default to the dropdown's choice or a toggle logic
+    sortData(result, sortKey);
+  } else {
+    renderTable(result);
+  }
+  
+  document.getElementById('rowCount').textContent = result.length + ' rows';
+}
+
+function sortData(data, key) {
+  // Toggle direction if clicking the same key, otherwise default to desc
+  if (window.currentSort.key === key) {
+    window.currentSort.direction = window.currentSort.direction === 'asc' ? 'desc' : 'asc';
+  } else {
+    window.currentSort.key = key;
+    window.currentSort.direction = 'desc'; 
   }
 
-  renderTable(result);
-  document.getElementById('rowCount').textContent = result.length + ' rows';
+  data.sort((a, b) => {
+    let valA = a[key];
+    let valB = b[key];
+
+    // Handle string comparison (ID, Country, etc)
+    if (typeof valA === 'string') {
+      return window.currentSort.direction === 'asc' 
+        ? valA.localeCompare(valB) 
+        : valB.localeCompare(valA);
+    }
+    
+    // Handle numeric comparison (GPA, Scores, etc)
+    return window.currentSort.direction === 'asc' ? valA - valB : valB - valA;
+  });
+
+  renderTable(data);
 }
 
 function resetTable() {
