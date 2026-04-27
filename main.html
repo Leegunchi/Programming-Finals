@@ -42,29 +42,32 @@
   ✔ No broken code merged into main
   -->
 
-  <!-- Chart.js — only dependency, loaded from CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
   <style>
     :root {
-      --bg:         #0d0f14;
-      --surface:    #151820;
-      --surface2:   #1c2030;
-      --border:     #2a2f45;
-      --accent:     #f0b429;
-      --accent2:    #3ecfcf;
-      --accent3:    #e05c6a;
-      --text:       #d4daf0;
-      --text-dim:   #6b748f;
-      --mono:       'Courier Prime', monospace;
-      --sans:       'DM Sans', sans-serif;
-      --radius:     6px;
-      --radius-lg:  12px;
-      --glow:       0 0 18px rgba(240,180,41,0.25);
+      --bg:          #f5f7f5;
+      --surface:     #ffffff;
+      --surface2:    #f0f4f0;
+      --border:      #d8e4d8;
+      --border-dark: #b8ccb8;
+      --green:       #3b6d11;
+      --green-mid:   #639922;
+      --green-light: #eaf3de;
+      --green-pale:  #f4f9ee;
+      --teal:        #0f6e56;
+      --teal-light:  #e1f5ee;
+      --amber:       #854f0b;
+      --amber-light: #faeeda;
+      --text:        #1a2e1a;
+      --text-mid:    #3b5c3b;
+      --text-dim:    #7a9a7a;
+      --sans:        'Inter', system-ui, sans-serif;
+      --mono:        'JetBrains Mono', monospace;
+      --radius:      6px;
+      --radius-lg:   10px;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -75,181 +78,184 @@
       color: var(--text);
       min-height: 100vh;
       padding: 0 0 80px;
-      background-image: repeating-linear-gradient(
-        0deg, transparent, transparent 2px,
-        rgba(255,255,255,0.013) 2px, rgba(255,255,255,0.013) 4px
-      );
+      font-size: 14px;
+      line-height: 1.6;
     }
 
+    /* ── HEADER ── */
     header {
       background: var(--surface);
-      border-bottom: 2px solid var(--accent);
-      padding: 20px 40px;
+      border-bottom: 1px solid var(--border);
+      padding: 18px 40px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: var(--glow);
     }
 
     .header-left h1 {
-      font-family: var(--mono);
-      font-size: 1.3rem;
-      color: var(--accent);
-      letter-spacing: 2px;
-      text-transform: uppercase;
+      font-family: var(--sans);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--green);
+      letter-spacing: 0.01em;
     }
 
     .header-left p {
-      font-size: 0.78rem;
+      font-size: 0.72rem;
       color: var(--text-dim);
       margin-top: 2px;
-      font-family: var(--mono);
     }
 
     .git-badge {
       display: flex;
       align-items: center;
-      gap: 8px;
-      background: var(--surface2);
+      gap: 7px;
+      background: var(--green-light);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 8px 14px;
+      padding: 6px 12px;
       font-family: var(--mono);
-      font-size: 0.75rem;
-      color: var(--accent2);
+      font-size: 0.72rem;
+      color: var(--green);
     }
 
     .git-badge .dot {
-      width: 8px; height: 8px;
+      width: 7px; height: 7px;
       border-radius: 50%;
-      background: var(--accent2);
+      background: var(--green-mid);
       animation: pulse 2s infinite;
     }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50%       { opacity: 0.3; }
-    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
-    main { max-width: 1400px; margin: 0 auto; padding: 40px 30px; }
+    /* ── LAYOUT ── */
+    main { max-width: 1400px; margin: 0 auto; padding: 36px 30px; }
 
+    /* ── CONTRIB CARDS ── */
     .contrib-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin-bottom: 50px;
+      gap: 14px;
+      margin-bottom: 44px;
     }
 
     .contrib-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
-      padding: 20px;
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.2s, box-shadow 0.2s;
+      padding: 18px 20px;
+      border-top: 3px solid var(--border);
     }
 
-    .contrib-card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(0,0,0,0.4); }
-    .contrib-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
-    .contrib-card.s1::before { background: var(--accent); }
-    .contrib-card.s2::before { background: var(--accent2); }
-    .contrib-card.s3::before { background: var(--accent3); }
+    .contrib-card.s1 { border-top-color: var(--green); }
+    .contrib-card.s2 { border-top-color: var(--teal); }
+    .contrib-card.s3 { border-top-color: var(--amber); }
 
     .contrib-card .student-tag {
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      letter-spacing: 2px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
-    .s1 .student-tag { color: var(--accent); }
-    .s2 .student-tag { color: var(--accent2); }
-    .s3 .student-tag { color: var(--accent3); }
+    .s1 .student-tag { color: var(--green); }
+    .s2 .student-tag { color: var(--teal); }
+    .s3 .student-tag { color: var(--amber); }
 
-    .contrib-card h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 10px; }
+    .contrib-card h3 { font-size: 0.88rem; font-weight: 600; margin-bottom: 10px; color: var(--text); }
 
-    .contrib-card ul { list-style: none; font-size: 0.8rem; color: var(--text-dim); line-height: 1.7; }
-    .contrib-card ul li::before { content: '→ '; color: var(--text-dim); }
+    .contrib-card ul { list-style: none; font-size: 0.78rem; color: var(--text-dim); line-height: 1.8; }
+    .contrib-card ul li::before { content: '· '; }
 
     .branch-tag {
       display: inline-block;
       margin-top: 12px;
       font-family: var(--mono);
-      font-size: 0.7rem;
+      font-size: 0.67rem;
       background: var(--surface2);
       border: 1px solid var(--border);
       border-radius: 4px;
-      padding: 3px 8px;
+      padding: 2px 8px;
       color: var(--text-dim);
     }
 
-    .section { margin-bottom: 56px; }
+    /* ── SECTION ── */
+    .section { margin-bottom: 52px; }
 
     .section-header {
       display: flex;
-      align-items: baseline;
-      gap: 14px;
-      margin-bottom: 20px;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
       padding-bottom: 12px;
       border-bottom: 1px solid var(--border);
     }
 
     .section-header h2 {
-      font-family: var(--mono);
-      font-size: 1.05rem;
-      letter-spacing: 1px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
+      color: var(--text-mid);
     }
 
     .owner-tag {
-      font-family: var(--mono);
-      font-size: 0.65rem;
-      letter-spacing: 1.5px;
+      font-size: 0.64rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      padding: 3px 10px;
+      padding: 2px 9px;
       border-radius: 20px;
-      font-weight: 700;
     }
 
-    .tag-s1 { background: rgba(240,180,41,0.15); color: var(--accent);  border: 1px solid rgba(240,180,41,0.3); }
-    .tag-s2 { background: rgba(62,207,207,0.15); color: var(--accent2); border: 1px solid rgba(62,207,207,0.3); }
-    .tag-s3 { background: rgba(224,92,106,0.15); color: var(--accent3); border: 1px solid rgba(224,92,106,0.3); }
+    .tag-s1 { background: var(--green-light);  color: var(--green);  border: 1px solid #c0d8a0; }
+    .tag-s2 { background: var(--teal-light);   color: var(--teal);   border: 1px solid #9fd8c0; }
+    .tag-s3 { background: var(--amber-light);  color: var(--amber);  border: 1px solid #f5c87a; }
 
-    .panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px; }
+    /* ── PANEL ── */
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+    }
 
+    /* ── TABLE ── */
     .table-wrap { overflow-x: auto; border-radius: var(--radius); }
 
-    table { width: 100%; border-collapse: collapse; font-size: 0.78rem; font-family: var(--mono); }
+    table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
 
     thead th {
-      background: var(--surface2);
-      color: var(--accent);
+      background: var(--green-pale);
+      color: var(--green);
       text-align: left;
-      padding: 10px 12px;
-      font-size: 0.68rem;
-      letter-spacing: 1.5px;
+      padding: 9px 12px;
+      font-size: 0.67rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      border-bottom: 2px solid var(--border);
+      border-bottom: 1px solid var(--border);
       white-space: nowrap;
     }
 
-    tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
-    tbody tr:hover { background: var(--surface2); }
+    tbody tr { border-bottom: 1px solid var(--border); transition: background 0.12s; }
+    tbody tr:hover { background: var(--green-pale); }
     tbody td { padding: 8px 12px; color: var(--text); white-space: nowrap; }
-    tbody td.numeric { color: var(--accent2); }
-    tbody td.highlight { color: var(--accent); }
-    tbody td.good { color: #56d364; }
-    tbody td.warn { color: var(--accent3); }
+    tbody td.mono  { font-family: var(--mono); font-size: 0.76rem; color: var(--text-mid); }
+    tbody td.green { color: var(--green); font-weight: 500; }
+    tbody td.teal  { color: var(--teal); font-family: var(--mono); font-size: 0.76rem; }
+    tbody td.warn  { color: #a03020; }
+    tbody td.good  { color: var(--green); }
 
+    /* ── TOOLBAR ── */
     .toolbar {
       display: flex;
-      gap: 10px;
-      margin-bottom: 18px;
+      gap: 8px;
+      margin-bottom: 16px;
       flex-wrap: wrap;
       align-items: center;
     }
@@ -258,88 +264,94 @@
       background: var(--surface2);
       border: 1px solid var(--border);
       color: var(--text);
-      font-family: var(--mono);
-      font-size: 0.8rem;
-      padding: 8px 12px;
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      padding: 7px 10px;
       border-radius: var(--radius);
       outline: none;
-      transition: border-color 0.2s;
+      transition: border-color 0.15s;
     }
 
-    input[type="text"]:focus, select:focus { border-color: var(--accent); }
-    input[type="text"] { width: 220px; }
+    input[type="text"]:focus, select:focus { border-color: var(--green-mid); }
+    input[type="text"] { width: 210px; }
 
     button {
       background: var(--surface2);
       border: 1px solid var(--border);
-      color: var(--text);
-      font-family: var(--mono);
+      color: var(--text-mid);
+      font-family: var(--sans);
       font-size: 0.78rem;
-      padding: 8px 14px;
+      padding: 7px 14px;
       border-radius: var(--radius);
       cursor: pointer;
-      letter-spacing: 0.5px;
-      transition: all 0.2s;
+      transition: all 0.15s;
+      font-weight: 500;
     }
 
-    button:hover { border-color: var(--accent); color: var(--accent); }
+    button:hover { border-color: var(--green-mid); color: var(--green); background: var(--green-light); }
 
     button.primary {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #000;
-      font-weight: 700;
+      background: var(--green);
+      border-color: var(--green);
+      color: #fff;
     }
 
-    button.primary:hover { background: #ffc946; }
+    button.primary:hover { background: var(--green-mid); }
 
-    .count-badge { font-family: var(--mono); font-size: 0.72rem; color: var(--text-dim); margin-left: auto; }
+    .count-badge {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      margin-left: auto;
+      font-family: var(--mono);
+    }
 
-    .chart-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    /* ── CHARTS ── */
+    .chart-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
 
     .chart-box {
-      background: var(--surface2);
+      background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
-      padding: 20px;
+      padding: 18px;
     }
 
     .chart-box h4 {
-      font-family: var(--mono);
-      font-size: 0.75rem;
+      font-size: 0.7rem;
+      font-weight: 600;
       color: var(--text-dim);
-      letter-spacing: 1.5px;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
     .chart-box canvas { max-height: 240px; }
 
     .chart-placeholder {
-      height: 200px;
+      height: 190px;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
       color: var(--text-dim);
-      font-family: var(--mono);
-      font-size: 0.78rem;
-      border: 2px dashed var(--border);
+      font-size: 0.76rem;
+      border: 1px dashed var(--border-dark);
       border-radius: var(--radius);
+      font-family: var(--mono);
     }
 
-    .chart-placeholder span { font-size: 2rem; }
+    .chart-placeholder .ico { font-size: 1.6rem; }
 
+    /* ── STATS ── */
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 14px;
-      margin-bottom: 24px;
+      gap: 12px;
+      margin-bottom: 20px;
     }
 
     .stat-card {
-      background: var(--surface2);
+      background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
       padding: 16px;
@@ -347,10 +359,10 @@
     }
 
     .stat-card .stat-label {
-      font-family: var(--mono);
-      font-size: 0.65rem;
+      font-size: 0.64rem;
+      font-weight: 600;
       color: var(--text-dim);
-      letter-spacing: 1.5px;
+      letter-spacing: 0.07em;
       text-transform: uppercase;
       margin-bottom: 8px;
     }
@@ -358,76 +370,85 @@
     .stat-card .stat-value {
       font-family: var(--mono);
       font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--accent3);
+      font-weight: 500;
+      color: var(--green);
     }
 
-    .stat-card .stat-sub { font-size: 0.7rem; color: var(--text-dim); margin-top: 4px; }
-    .stat-placeholder { font-family: var(--mono); font-size: 1.2rem; color: var(--border); }
+    .stat-card .stat-sub { font-size: 0.68rem; color: var(--text-dim); margin-top: 4px; }
+    .stat-placeholder { color: var(--border-dark); }
 
-    .analysis-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    /* ── ANALYSIS ── */
+    .analysis-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 
     .analysis-panel {
-      background: var(--surface2);
+      background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
       padding: 18px;
     }
 
     .analysis-panel h4 {
-      font-family: var(--mono);
-      font-size: 0.72rem;
+      font-size: 0.68rem;
+      font-weight: 600;
       color: var(--text-dim);
-      letter-spacing: 1.5px;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
 
-    .stat-list { list-style: none; font-family: var(--mono); font-size: 0.82rem; }
-    .stat-list li { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid var(--border); }
+    .stat-list { list-style: none; font-size: 0.8rem; }
+    .stat-list li { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--border); }
     .stat-list li:last-child { border-bottom: none; }
     .stat-list .key { color: var(--text-dim); }
-    .stat-list .val { color: var(--accent2); }
+    .stat-list .val { color: var(--teal); font-family: var(--mono); font-size: 0.78rem; font-weight: 500; }
 
+    /* ── TODO CALLOUT ── */
     .todo-callout {
-      background: rgba(240,180,41,0.08);
-      border: 1px solid rgba(240,180,41,0.25);
-      border-left: 4px solid var(--accent);
+      background: var(--green-pale);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--green);
       border-radius: var(--radius);
-      padding: 14px 18px;
-      font-family: var(--mono);
+      padding: 12px 16px;
       font-size: 0.78rem;
-      color: var(--accent);
-      margin-bottom: 20px;
-      line-height: 1.7;
+      color: var(--text-mid);
+      margin-bottom: 18px;
+      line-height: 1.65;
     }
 
-    .todo-callout strong { display: block; margin-bottom: 4px; font-size: 0.72rem; letter-spacing: 1px; }
+    .todo-callout strong {
+      display: block;
+      margin-bottom: 3px;
+      font-size: 0.68rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--green);
+    }
 
+    .todo-callout.s2 { background: var(--teal-light); border-left-color: var(--teal); }
+    .todo-callout.s2 strong { color: var(--teal); }
+    .todo-callout.s3 { background: var(--amber-light); border-left-color: var(--amber); }
+    .todo-callout.s3 strong { color: var(--amber); }
+
+    code {
+      font-family: var(--mono);
+      font-size: 0.8em;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 1px 5px;
+      color: var(--green);
+    }
+
+    /* ── FOOTER ── */
     footer {
       text-align: center;
       margin-top: 60px;
-      font-family: var(--mono);
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       color: var(--text-dim);
-      letter-spacing: 1px;
+      line-height: 1.8;
     }
 
-    .kaggle-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(32,149,242,0.12);
-      border: 1px solid rgba(32,149,242,0.3);
-      border-radius: 4px;
-      padding: 3px 10px;
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      color: #20bef2;
-      margin-left: 10px;
-      vertical-align: middle;
-    }
-
+    /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
       .contrib-grid  { grid-template-columns: 1fr; }
       .chart-grid    { grid-template-columns: 1fr; }
@@ -441,7 +462,7 @@
 <header>
   <div class="header-left">
     <h1>DataSci Collab Dashboard</h1>
-    <p>Global University Students Performance &amp; Study Habits 2026 · Kaggle Dataset · Git Collaborative Activity</p>
+    <p>Global University Students Performance &amp; Study Habits 2026 &middot; Kaggle &middot; Git Collaborative Activity</p>
   </div>
   <div class="git-badge">
     <span class="dot"></span>
@@ -463,7 +484,7 @@
         <li>Implement filter &amp; sort logic</li>
         <li>Invite collaborators &amp; protect main</li>
       </ul>
-      <span class="branch-tag">branch: main (setup) → feature/data-engine</span>
+      <span class="branch-tag">feature/data-engine</span>
     </div>
     <div class="contrib-card s2">
       <div class="student-tag">Theodore Kelly G. Cabrera</div>
@@ -475,7 +496,7 @@
         <li>Implement <code>drawPieChart()</code></li>
         <li>Open and get PR merged into main</li>
       </ul>
-      <span class="branch-tag">branch: feature/visualization</span>
+      <span class="branch-tag">feature/visualization</span>
     </div>
     <div class="contrib-card s3">
       <div class="student-tag">Tinsay, John Cleo</div>
@@ -487,7 +508,7 @@
         <li>Implement <code>linearRegression()</code></li>
         <li>Open and get PR merged into main</li>
       </ul>
-      <span class="branch-tag">branch: feature/statistics</span>
+      <span class="branch-tag">feature/statistics</span>
     </div>
   </div>
 
@@ -495,9 +516,8 @@
   <!-- ═══ SECTION 1 — DATASET & TABLE (STUDENT 1) ═══ -->
   <section class="section" id="sec-data">
     <div class="section-header">
-      <h2>01 · Dataset Explorer</h2>
-      <span class="owner-tag tag-s1">Student 1 · Repo Owner</span>
-      <span class="kaggle-badge">📦 Kaggle 2026</span>
+      <h2>01 &middot; Dataset Explorer</h2>
+      <span class="owner-tag tag-s1">Student 1 &middot; Repo Owner</span>
     </div>
 
     <!--
@@ -531,14 +551,14 @@
     -->
 
     <div class="todo-callout">
-      <strong>⚠ TODO — Student 1</strong>
+      <strong>Todo — Student 1</strong>
       Implement <code>loadDataset()</code> and <code>renderTable(data)</code>, and wire the filter/sort controls.
       The RAW_DATA object from the Kaggle dataset is already provided below. After completion, commit and open your PR to main.
     </div>
 
     <div class="panel">
       <div class="toolbar">
-        <input type="text" id="filterInput" placeholder="Filter by student ID, country, major..." />
+        <input type="text" id="filterInput" placeholder="Filter by ID, country, major..." />
         <select id="sortSelect">
           <option value="">Sort by...</option>
           <option value="studentId">Student ID</option>
@@ -546,7 +566,7 @@
           <option value="gpa">GPA</option>
           <option value="studyHours">Study Hours/Day</option>
           <option value="attendance">Attendance %</option>
-          <option value="finalScore">Final Exam Score</option>
+          <option value="finalScore">Final Score</option>
           <option value="assignmentScore">Assignment Score</option>
           <option value="stress">Stress Level</option>
           <option value="sleep">Sleep Hours</option>
@@ -618,8 +638,8 @@
           </thead>
           <tbody id="tableBody">
             <tr>
-              <td colspan="28" style="text-align:center; color:var(--text-dim); font-family:var(--mono); padding:40px;">
-                ⌛ Waiting for Student 1 to implement loadDataset() and renderTable()
+              <td colspan="28" style="text-align:center;color:var(--text-dim);padding:40px;font-family:var(--mono);font-size:0.78rem;">
+                Waiting for Student 1 to implement loadDataset() and renderTable()
               </td>
             </tr>
           </tbody>
@@ -632,8 +652,8 @@
   <!-- ═══ SECTION 2 — VISUALIZATIONS (STUDENT 2) ═══ -->
   <section class="section" id="sec-viz">
     <div class="section-header">
-      <h2>02 · Visualizations</h2>
-      <span class="owner-tag tag-s2">Student 2 · Collaborator</span>
+      <h2>02 &middot; Visualizations</h2>
+      <span class="owner-tag tag-s2">Student 2 &middot; Collaborator</span>
     </div>
 
     <!--
@@ -667,8 +687,8 @@
     └─────────────────────────────────────────────────────────────────┘
     -->
 
-    <div class="todo-callout" style="border-left-color:var(--accent2);color:var(--accent2);background:rgba(62,207,207,0.06);border-color:rgba(62,207,207,0.25);">
-      <strong>⚠ TODO — Student 2</strong>
+    <div class="todo-callout s2">
+      <strong>Todo — Student 2</strong>
       Implement the four chart functions: <code>drawBarChart()</code>, <code>drawScatterPlot()</code>,
       <code>drawHistogram()</code>, and <code>drawPieChart()</code>. Then call <code>initCharts()</code>
       inside <code>onDataReady()</code>. Use Chart.js (already loaded).
@@ -678,7 +698,8 @@
       <div class="chart-box">
         <h4>Study Hours/Day vs Final Score</h4>
         <div class="chart-placeholder" id="barPlaceholder">
-          <span>📊</span>Student 2: implement drawBarChart()
+          <span class="ico">&#x1F4CA;</span>
+          Student 2: implement drawBarChart()
         </div>
         <canvas id="barChart" style="display:none;"></canvas>
       </div>
@@ -686,7 +707,8 @@
       <div class="chart-box">
         <h4>GPA vs Final Exam Score</h4>
         <div class="chart-placeholder" id="scatterPlaceholder">
-          <span>🔵</span>Student 2: implement drawScatterPlot()
+          <span class="ico">&#x25CF;</span>
+          Student 2: implement drawScatterPlot()
         </div>
         <canvas id="scatterChart" style="display:none;"></canvas>
       </div>
@@ -694,7 +716,8 @@
       <div class="chart-box">
         <h4>Final Score Distribution</h4>
         <div class="chart-placeholder" id="histPlaceholder">
-          <span>📈</span>Student 2: implement drawHistogram()
+          <span class="ico">&#x1F4C8;</span>
+          Student 2: implement drawHistogram()
         </div>
         <canvas id="histChart" style="display:none;"></canvas>
       </div>
@@ -702,7 +725,8 @@
       <div class="chart-box">
         <h4>Favorite AI Tool Breakdown</h4>
         <div class="chart-placeholder" id="piePlaceholder">
-          <span>🤖</span>Student 2: implement drawPieChart()
+          <span class="ico">&#x25D4;</span>
+          Student 2: implement drawPieChart()
         </div>
         <canvas id="pieChart" style="display:none;"></canvas>
       </div>
@@ -713,8 +737,8 @@
   <!-- ═══ SECTION 3 — STATISTICS (STUDENT 3) ═══ -->
   <section class="section" id="sec-stats">
     <div class="section-header">
-      <h2>03 · Statistical Analysis</h2>
-      <span class="owner-tag tag-s3">Student 3 · Collaborator</span>
+      <h2>03 &middot; Statistical Analysis</h2>
+      <span class="owner-tag tag-s3">Student 3 &middot; Collaborator</span>
     </div>
 
     <!--
@@ -745,8 +769,8 @@
     └─────────────────────────────────────────────────────────────────┘
     -->
 
-    <div class="todo-callout" style="border-left-color:var(--accent3);color:var(--accent3);background:rgba(224,92,106,0.06);border-color:rgba(224,92,106,0.25);">
-      <strong>⚠ TODO — Student 3</strong>
+    <div class="todo-callout s3">
+      <strong>Todo — Student 3</strong>
       Implement all seven statistical functions. Then call <code>renderStats(window.DS)</code>
       inside <code>onDataReady()</code>. All "—" placeholders below should be replaced by computed results.
     </div>
@@ -778,18 +802,18 @@
       <div class="analysis-panel">
         <h4>Descriptive Statistics — Final Exam Score</h4>
         <ul class="stat-list">
-          <li><span class="key">Count (n)</span>        <span class="val" id="dCount">—</span></li>
-          <li><span class="key">Min Score</span>        <span class="val" id="dMin">—</span></li>
-          <li><span class="key">Max Score</span>        <span class="val" id="dMax">—</span></li>
-          <li><span class="key">Range</span>            <span class="val" id="dRange">—</span></li>
-          <li><span class="key">Variance (σ²)</span>   <span class="val" id="dVariance">—</span></li>
-          <li><span class="key">Std Dev (σ)</span>      <span class="val" id="dStdDev">—</span></li>
-          <li><span class="key">Mode (Score)</span>     <span class="val" id="dMode">—</span></li>
+          <li><span class="key">Count (n)</span>       <span class="val" id="dCount">—</span></li>
+          <li><span class="key">Min Score</span>       <span class="val" id="dMin">—</span></li>
+          <li><span class="key">Max Score</span>       <span class="val" id="dMax">—</span></li>
+          <li><span class="key">Range</span>           <span class="val" id="dRange">—</span></li>
+          <li><span class="key">Variance (σ²)</span>  <span class="val" id="dVariance">—</span></li>
+          <li><span class="key">Std Dev (σ)</span>     <span class="val" id="dStdDev">—</span></li>
+          <li><span class="key">Mode (Score)</span>    <span class="val" id="dMode">—</span></li>
         </ul>
       </div>
 
       <div class="analysis-panel">
-        <h4>Correlation &amp; Regression (Study Hours/Day → Final Score)</h4>
+        <h4>Correlation &amp; Regression — Study Hours → Final Score</h4>
         <ul class="stat-list">
           <li><span class="key">Pearson r</span>        <span class="val" id="rPearson">—</span></li>
           <li><span class="key">Interpretation</span>   <span class="val" id="rInterp">—</span></li>
@@ -805,9 +829,8 @@
 </main>
 
 <footer>
-  DS COLLAB PROJECT · COMPUTER SCIENCE DEPT · GIT COLLABORATIVE ACTIVITY<br>
-  Dataset: Global University Students Performance &amp; Study Habits 2026 (Kaggle · asifxzaman)<br>
-  Each student's contribution is tracked via commits, branches, and pull requests.
+  DS Collab Project &middot; Computer Science Dept &middot; Git Collaborative Activity<br>
+  Dataset: Global University Students Performance &amp; Study Habits 2026 (Kaggle &middot; asifxzaman)
 </footer>
 
 
@@ -875,13 +898,9 @@ const RAW_DATA = [
   { studentId:"S00020", age:21, gender:"Female", country:"Netherlands", major:"Business",         year:4, gpa:2.60, studyHours:1.4, attendance:74,  sleep:9.2, screenTime:7.8, socialMedia:5.5, gaming:0.0, exercise:4.2, partTimeJob:"Yes", relationship:"Single",            familyIncome:"Low",    internet:"Average", stress:3.9, aiUsage:0.7, favAiTool:"Gemini",  noteTaking:"Handwritten", examPrepDays:14, coffee:1, extracurricular:4.2, finalScore:87,  assignmentScore:75  },
 ];
 
-/* Global dataset — Student 1 sets this; Students 2 & 3 read from it */
 window.DS = [];
-
-/* Chart instances registry */
 window.CHARTS = {};
 
-/* Called automatically when the dataset is ready */
 function onDataReady() {
   initCharts();
   renderStats(window.DS);
@@ -907,8 +926,8 @@ function renderTable(data) {
   if (data.length === 0) {
     tbody.innerHTML = `
       <tr>
-        <td colspan="28" style="text-align:center;color:var(--text-dim);font-family:var(--mono);padding:40px;">
-          ⚠ No results found.
+        <td colspan="28" style="text-align:center;color:var(--text-dim);padding:40px;font-family:var(--mono);font-size:0.78rem;">
+          No results found.
         </td>
       </tr>`;
     return;
@@ -917,44 +936,44 @@ function renderTable(data) {
   data.forEach((s, i) => {
     const row = document.createElement('tr');
     row.innerHTML = `
-      <td>${i + 1}</td>
-      <td class="highlight">${s.studentId}</td>
-      <td class="numeric">${s.age}</td>
+      <td style="color:var(--text-dim);font-family:var(--mono);font-size:0.72rem;">${i + 1}</td>
+      <td class="green" style="font-family:var(--mono);font-size:0.76rem;">${s.studentId}</td>
+      <td class="mono">${s.age}</td>
       <td>${s.gender}</td>
       <td>${s.country}</td>
       <td>${s.major}</td>
-      <td class="numeric">Yr ${s.year}</td>
-      <td class="numeric">${s.gpa.toFixed(2)}</td>
-      <td class="numeric">${s.studyHours}</td>
-      <td class="numeric">${s.attendance}%</td>
-      <td class="numeric">${s.sleep}</td>
-      <td class="numeric">${s.screenTime}</td>
-      <td class="numeric">${s.socialMedia}</td>
-      <td class="numeric">${s.gaming}</td>
-      <td class="numeric">${s.exercise}</td>
+      <td class="mono">Yr ${s.year}</td>
+      <td class="mono">${s.gpa.toFixed(2)}</td>
+      <td class="mono">${s.studyHours}</td>
+      <td class="mono">${s.attendance}%</td>
+      <td class="mono">${s.sleep}</td>
+      <td class="mono">${s.screenTime}</td>
+      <td class="mono">${s.socialMedia}</td>
+      <td class="mono">${s.gaming}</td>
+      <td class="mono">${s.exercise}</td>
       <td class="${s.partTimeJob === 'Yes' ? 'warn' : ''}">${s.partTimeJob}</td>
       <td>${s.relationship}</td>
       <td>${s.familyIncome}</td>
       <td>${s.internet}</td>
-      <td class="numeric">${s.stress}</td>
-      <td class="numeric">${s.aiUsage}</td>
+      <td class="mono">${s.stress}</td>
+      <td class="mono">${s.aiUsage}</td>
       <td>${s.favAiTool}</td>
       <td>${s.noteTaking}</td>
-      <td class="numeric">${s.examPrepDays}</td>
-      <td class="numeric">${s.coffee}</td>
-      <td class="numeric">${s.extracurricular}</td>
-      <td class="numeric ${s.finalScore >= 90 ? 'good' : s.finalScore < 75 ? 'warn' : ''}">${s.finalScore}</td>
-      <td class="numeric ${s.assignmentScore >= 90 ? 'good' : s.assignmentScore < 75 ? 'warn' : ''}">${s.assignmentScore}</td>
+      <td class="mono">${s.examPrepDays}</td>
+      <td class="mono">${s.coffee}</td>
+      <td class="mono">${s.extracurricular}</td>
+      <td class="mono ${s.finalScore >= 90 ? 'good' : s.finalScore < 75 ? 'warn' : ''}">${s.finalScore}</td>
+      <td class="mono ${s.assignmentScore >= 90 ? 'good' : s.assignmentScore < 75 ? 'warn' : ''}">${s.assignmentScore}</td>
     `;
     tbody.appendChild(row);
   });
 }
 
 function applyFilterSort() {
-  const text        = document.getElementById('filterInput').value.trim().toLowerCase();
-  const sortKey     = document.getElementById('sortSelect').value;
-  const country     = document.getElementById('filterCountry').value;
-  const major       = document.getElementById('filterMajor').value;
+  const text    = document.getElementById('filterInput').value.trim().toLowerCase();
+  const sortKey = document.getElementById('sortSelect').value;
+  const country = document.getElementById('filterCountry').value;
+  const major   = document.getElementById('filterMajor').value;
 
   let result = window.DS.filter(s => {
     const matchText    = !text    || s.studentId.toLowerCase().includes(text) || s.country.toLowerCase().includes(text) || s.major.toLowerCase().includes(text) || s.gender.toLowerCase().includes(text);
@@ -966,7 +985,7 @@ function applyFilterSort() {
   if (sortKey) {
     result.sort((a, b) => {
       if (sortKey === 'studentId') return a.studentId.localeCompare(b.studentId);
-      return b[sortKey] - a[sortKey]; // numeric descending
+      return b[sortKey] - a[sortKey];
     });
   }
 
@@ -983,21 +1002,13 @@ function resetTable() {
   document.getElementById('rowCount').textContent = window.DS.length + ' rows';
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  loadDataset();
-});
+document.addEventListener('DOMContentLoaded', () => { loadDataset(); });
 
 
 /* ═══════════════════════════════════════════════════════════════════
    STUDENT 2 — VISUALIZATION LAYER (branch: feature/visualization)
 ═══════════════════════════════════════════════════════════════════ */
 
-/**
- * STUDENT 2 TODO — initCharts()
- * Entry point called from onDataReady(). Call all four draw functions here.
- * Always destroy old chart instances before creating new ones:
- *   if (window.CHARTS['barChart']) window.CHARTS['barChart'].destroy();
- */
 function initCharts() {
   drawBarChart('barChart', window.DS);
   drawScatterPlot('scatterChart', window.DS);
@@ -1005,187 +1016,102 @@ function initCharts() {
   drawPieChart('pieChart', window.DS);
 }
 
-/**
- * drawBarChart(canvasId, data)
- * Chart: Study Hours/Day (x-axis, sorted) vs Final Score (y-axis)
- * Each bar = one student (use first name from studentId label or index)
- */
 function drawBarChart(canvasId, data) {
   if (window.CHARTS[canvasId]) window.CHARTS[canvasId].destroy();
-
   const sorted = [...data].sort((a, b) => a.studyHours - b.studyHours);
-  const labels = sorted.map(d => d.studentId);
-  const scores = sorted.map(d => d.finalScore);
-
   const ctx = document.getElementById(canvasId).getContext('2d');
   window.CHARTS[canvasId] = new Chart(ctx, {
     type: 'bar',
     data: {
-      labels,
-      datasets: [{
-        label: 'Final Exam Score',
-        data: scores,
-        backgroundColor: 'rgba(240,180,41,0.8)'
-      }]
+      labels: sorted.map(d => d.studentId),
+      datasets: [{ label: 'Final Exam Score', data: sorted.map(d => d.finalScore), backgroundColor: '#639922', borderRadius: 3 }]
     },
-    options: {
-      ...getChartDefaults(),
-      scales: { ...getChartDefaults().scales, y: { ...getChartDefaults().scales.y, min: 50, max: 100 } }
-    }
+    options: { ...getChartDefaults(), scales: { ...getChartDefaults().scales, y: { ...getChartDefaults().scales.y, min: 50, max: 100 } } }
   });
-
   document.getElementById('barPlaceholder').style.display = 'none';
   document.getElementById(canvasId).style.display = 'block';
 }
 
-/**
- * drawScatterPlot(canvasId, data)
- * Chart: GPA (x-axis) vs Final Exam Score (y-axis)
- * Tooltip shows: studentId, country, major
- */
 function drawScatterPlot(canvasId, data) {
   if (window.CHARTS[canvasId]) window.CHARTS[canvasId].destroy();
-
-  const points = data.map(d => ({ x: d.gpa, y: d.finalScore, id: d.studentId, country: d.country, major: d.major }));
-
   const ctx = document.getElementById(canvasId).getContext('2d');
   window.CHARTS[canvasId] = new Chart(ctx, {
     type: 'scatter',
     data: {
       datasets: [{
         label: 'Students',
-        data: points,
-        backgroundColor: '#3ecfcf'
+        data: data.map(d => ({ x: d.gpa, y: d.finalScore, id: d.studentId, country: d.country, major: d.major })),
+        backgroundColor: '#1d9e75',
+        pointRadius: 5
       }]
     },
     options: {
       ...getChartDefaults(),
       plugins: {
         ...getChartDefaults().plugins,
-        tooltip: {
-          callbacks: {
-            label: ctx => {
-              const p = ctx.raw;
-              return `${p.id} | GPA: ${p.x} → Score: ${p.y} | ${p.country} · ${p.major}`;
-            }
-          }
-        }
+        tooltip: { callbacks: { label: ctx => { const p = ctx.raw; return `${p.id} | GPA: ${p.x} → Score: ${p.y} | ${p.country}`; } } }
       }
     }
   });
-
   document.getElementById('scatterPlaceholder').style.display = 'none';
   document.getElementById(canvasId).style.display = 'block';
 }
 
-/**
- * drawHistogram(canvasId, data)
- * Distribution of Final Exam Scores in bins: 50s, 60s, 70s, 80s, 90s, 100
- */
 function drawHistogram(canvasId, data) {
   if (window.CHARTS[canvasId]) window.CHARTS[canvasId].destroy();
-
-  const bins   = [50, 60, 70, 80, 90, 100, 101];
+  const bins = [50,60,70,80,90,100,101];
   const counts = new Array(bins.length - 1).fill(0);
-
-  data.forEach(d => {
-    for (let i = 0; i < bins.length - 1; i++) {
-      if (d.finalScore >= bins[i] && d.finalScore < bins[i + 1]) { counts[i]++; break; }
-    }
-  });
-
+  data.forEach(d => { for (let i = 0; i < bins.length - 1; i++) { if (d.finalScore >= bins[i] && d.finalScore < bins[i+1]) { counts[i]++; break; } } });
   const ctx = document.getElementById(canvasId).getContext('2d');
   window.CHARTS[canvasId] = new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: ['50–59', '60–69', '70–79', '80–89', '90–99', '100'],
-      datasets: [{
-        label: 'Students',
-        data: counts,
-        backgroundColor: 'rgba(224,92,106,0.75)',
-        barPercentage: 1.0,
-        categoryPercentage: 1.0
-      }]
+      labels: ['50–59','60–69','70–79','80–89','90–99','100'],
+      datasets: [{ label: 'Students', data: counts, backgroundColor: '#3b6d11', borderRadius: 3, barPercentage: 0.9, categoryPercentage: 0.9 }]
     },
     options: getChartDefaults()
   });
-
   document.getElementById('histPlaceholder').style.display = 'none';
   document.getElementById(canvasId).style.display = 'block';
 }
 
-/**
- * drawPieChart(canvasId, data)
- * Breakdown of favAiTool: ChatGPT, Claude, Gemini, Copilot, N/A
- */
 function drawPieChart(canvasId, data) {
   if (window.CHARTS[canvasId]) window.CHARTS[canvasId].destroy();
-
   const counts = { ChatGPT:0, Claude:0, Gemini:0, Copilot:0, 'N/A':0 };
-  data.forEach(d => {
-    if (counts[d.favAiTool] !== undefined) counts[d.favAiTool]++;
-    else counts['N/A']++;
-  });
-
-  const labels = Object.keys(counts);
+  data.forEach(d => { if (counts[d.favAiTool] !== undefined) counts[d.favAiTool]++; else counts['N/A']++; });
   const values = Object.values(counts);
-  const total  = values.reduce((a, b) => a + b, 0);
-
+  const total  = values.reduce((a,b) => a+b, 0);
   const ctx = document.getElementById(canvasId).getContext('2d');
   window.CHARTS[canvasId] = new Chart(ctx, {
     type: 'doughnut',
     data: {
-      labels,
-      datasets: [{
-        data: values,
-        backgroundColor: ['#56d364', '#f0b429', '#3ecfcf', '#e05c6a', '#6b748f']
-      }]
+      labels: Object.keys(counts),
+      datasets: [{ data: values, backgroundColor: ['#639922','#1d9e75','#3b6d11','#97c459','#b4b2a9'] }]
     },
     options: {
       ...getChartDefaults(),
-      cutout: '55%',
+      cutout: '58%',
       plugins: {
         ...getChartDefaults().plugins,
-        tooltip: {
-          callbacks: {
-            label: ctx => {
-              const val = ctx.raw;
-              const pct = ((val / total) * 100).toFixed(1);
-              return `${ctx.label}: ${val} students (${pct}%)`;
-            }
-          }
-        }
+        tooltip: { callbacks: { label: ctx => `${ctx.label}: ${ctx.raw} (${((ctx.raw/total)*100).toFixed(1)}%)` } }
       }
     }
   });
-
   document.getElementById('piePlaceholder').style.display = 'none';
   document.getElementById(canvasId).style.display = 'block';
 }
 
-/**
- * STUDENT 2 HELPER — getChartDefaults()
- * Pre-configured Chart.js options for the dark theme.
- */
 function getChartDefaults() {
   return {
     responsive: true,
     maintainAspectRatio: true,
     plugins: {
-      legend: { labels: { color: '#6b748f', font: { family: 'Courier Prime', size: 11 } } },
-      tooltip: {
-        backgroundColor: '#1c2030',
-        borderColor: '#2a2f45',
-        borderWidth: 1,
-        titleColor: '#f0b429',
-        bodyColor: '#d4daf0',
-        titleFont: { family: 'Courier Prime' },
-        bodyFont: { family: 'Courier Prime' }
-      }
+      legend: { labels: { color: '#7a9a7a', font: { family: 'Inter', size: 11 } } },
+      tooltip: { backgroundColor: '#fff', borderColor: '#d8e4d8', borderWidth: 1, titleColor: '#3b6d11', bodyColor: '#1a2e1a', titleFont: { family: 'Inter', weight: '600' }, bodyFont: { family: 'JetBrains Mono', size: 11 } }
     },
     scales: {
-      x: { ticks: { color: '#6b748f', font: { family: 'Courier Prime', size: 10 } }, grid: { color: '#2a2f45' } },
-      y: { ticks: { color: '#6b748f', font: { family: 'Courier Prime', size: 10 } }, grid: { color: '#2a2f45' } }
+      x: { ticks: { color: '#7a9a7a', font: { family: 'JetBrains Mono', size: 10 } }, grid: { color: '#e8f0e8' } },
+      y: { ticks: { color: '#7a9a7a', font: { family: 'JetBrains Mono', size: 10 } }, grid: { color: '#e8f0e8' } }
     }
   };
 }
@@ -1195,64 +1121,36 @@ function getChartDefaults() {
    STUDENT 3 — STATISTICAL ANALYSIS ENGINE (branch: feature/statistics)
 ═══════════════════════════════════════════════════════════════════ */
 
-/**
- * mean(arr) — arithmetic average
- * FORMULA: μ = (Σxᵢ) / n
- */
 function mean(arr) {
   if (!arr || arr.length === 0) return 0;
-  return +(arr.reduce((acc, v) => acc + v, 0) / arr.length).toFixed(2);
+  return +(arr.reduce((a, v) => a + v, 0) / arr.length).toFixed(2);
 }
 
-/**
- * median(arr) — middle value of sorted array
- * For even-length arrays, average the two middle values.
- */
 function median(arr) {
   if (!arr || arr.length === 0) return 0;
-  const sorted = [...arr].sort((a, b) => a - b);
-  const n = sorted.length, mid = Math.floor(n / 2);
-  return n % 2 === 1 ? +sorted[mid].toFixed(2) : +((sorted[mid-1] + sorted[mid]) / 2).toFixed(2);
+  const s = [...arr].sort((a, b) => a - b);
+  const n = s.length, m = Math.floor(n / 2);
+  return n % 2 === 1 ? +s[m].toFixed(2) : +((s[m-1] + s[m]) / 2).toFixed(2);
 }
 
-/**
- * mode(arr) — most frequently occurring value(s)
- * If multiple values tie, return all joined by " & "
- */
 function mode(arr) {
   if (!arr || arr.length === 0) return '—';
   const freq = {};
   arr.forEach(v => { freq[v] = (freq[v] || 0) + 1; });
-  const maxCount = Math.max(...Object.values(freq));
-  return Object.keys(freq)
-    .filter(k => freq[k] === maxCount)
-    .map(Number)
-    .sort((a, b) => a - b)
-    .join(' & ');
+  const max = Math.max(...Object.values(freq));
+  return Object.keys(freq).filter(k => freq[k] === max).map(Number).sort((a,b) => a-b).join(' & ');
 }
 
-/**
- * variance(arr) — population variance
- * FORMULA: σ² = (Σ(xᵢ − μ)²) / n
- */
 function variance(arr) {
   if (!arr || arr.length === 0) return 0;
   const μ = mean(arr);
-  return +(arr.reduce((acc, v) => acc + Math.pow(v - μ, 2), 0) / arr.length).toFixed(2);
+  return +(arr.reduce((a, v) => a + Math.pow(v - μ, 2), 0) / arr.length).toFixed(2);
 }
 
-/**
- * stdDev(arr) — standard deviation
- * FORMULA: σ = √(variance(arr))
- */
 function stdDev(arr) {
   return +Math.sqrt(variance(arr)).toFixed(2);
 }
 
-/**
- * pearsonCorr(x, y) — Pearson correlation coefficient r
- * FORMULA: r = Σ((xᵢ−x̄)(yᵢ−ȳ)) / √(Σ(xᵢ−x̄)² · Σ(yᵢ−ȳ)²)
- */
 function pearsonCorr(x, y) {
   const n = x.length, mx = mean(x), my = mean(y);
   let num = 0, dx2 = 0, dy2 = 0;
@@ -1260,26 +1158,14 @@ function pearsonCorr(x, y) {
     const dx = x[i] - mx, dy = y[i] - my;
     num += dx * dy; dx2 += dx * dx; dy2 += dy * dy;
   }
-  const denom = Math.sqrt(dx2 * dy2);
-  return denom === 0 ? 0 : +(num / denom).toFixed(4);
+  const d = Math.sqrt(dx2 * dy2);
+  return d === 0 ? 0 : +(num / d).toFixed(4);
 }
 
-/**
- * linearRegression(x, y) — simple linear regression
- * Returns: { slope, intercept, rSquared }
- * FORMULAS:
- *   m = Σ((xᵢ−x̄)(yᵢ−ȳ)) / Σ(xᵢ−x̄)²
- *   b = ȳ − m·x̄
- *   R² = r²
- */
 function linearRegression(x, y) {
   const mx = mean(x), my = mean(y);
   let num = 0, den = 0;
-  for (let i = 0; i < x.length; i++) {
-    const dx = x[i] - mx;
-    num += dx * (y[i] - my);
-    den += dx * dx;
-  }
+  for (let i = 0; i < x.length; i++) { const dx = x[i] - mx; num += dx * (y[i] - my); den += dx * dx; }
   const slope     = den !== 0 ? +(num / den).toFixed(4) : 0;
   const intercept = +(my - slope * mx).toFixed(4);
   const r         = pearsonCorr(x, y);
@@ -1287,24 +1173,17 @@ function linearRegression(x, y) {
   return { slope, intercept, rSquared };
 }
 
-/**
- * renderStats(data) — compute all stats and update the DOM
- * Called from onDataReady() after Student 1 loads the dataset.
- * Uses Kaggle fields: finalScore, studyHours, gpa
- */
 function renderStats(data) {
   try {
     const scores = data.map(d => d.finalScore);
     const hours  = data.map(d => d.studyHours);
     const gpas   = data.map(d => d.gpa);
 
-    // Summary cards
     document.getElementById('statMean').textContent    = mean(scores);
     document.getElementById('statMedian').textContent  = median(scores);
     document.getElementById('statStdDev').textContent  = stdDev(scores);
     document.getElementById('statMeanGPA').textContent = mean(gpas);
 
-    // Descriptive stats
     const minS = Math.min(...scores), maxS = Math.max(...scores);
     document.getElementById('dCount').textContent    = data.length;
     document.getElementById('dMin').textContent      = minS;
@@ -1314,7 +1193,6 @@ function renderStats(data) {
     document.getElementById('dStdDev').textContent   = stdDev(scores);
     document.getElementById('dMode').textContent     = mode(scores);
 
-    // Correlation & regression: studyHours → finalScore
     const r   = pearsonCorr(hours, scores);
     const reg = linearRegression(hours, scores);
     const absR = Math.abs(r);
@@ -1322,20 +1200,15 @@ function renderStats(data) {
     const direction = r >= 0 ? 'Positive' : 'Negative';
 
     document.getElementById('rPearson').textContent   = r;
-    document.getElementById('rInterp').textContent    = `${strength} ${direction} Correlation`;
+    document.getElementById('rInterp').textContent    = `${strength} ${direction}`;
     document.getElementById('rSlope').textContent     = reg.slope;
     document.getElementById('rIntercept').textContent = reg.intercept;
     document.getElementById('rSquared').textContent   = reg.rSquared;
-    document.getElementById('rEquation').textContent  =
-      `finalScore = ${reg.slope}·studyHours + ${reg.intercept}`;
+    document.getElementById('rEquation').textContent  = `score = ${reg.slope}·hrs + ${reg.intercept}`;
   } catch (err) {
     console.error("renderStats error:", err);
   }
 }
-
-/* ─────────────────────────────────────────────────────────────────
-   END OF STUDENT CONTRIBUTION ZONES
-────────────────────────────────────────────────────────────────── */
 </script>
 </body>
 </html>
